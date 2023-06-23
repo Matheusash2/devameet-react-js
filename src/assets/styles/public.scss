@@ -1,0 +1,77 @@
+@import './configs.scss';
+
+.container-public {
+    width: 85%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+    .logo {
+        margin-bottom: 60px;
+        height: 12%;
+        max-width: 228px;
+    }
+    
+    p {
+        text-align: center;
+        font-weight: bold;
+        max-width: 300px;
+    
+        &.error {
+            color: $error;
+        }
+    
+        &.success {
+            color: $primaryColor;
+        }
+    }
+
+    .input {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-top: 10px;
+        padding-bottom: 5px;
+        margin-bottom: 15px;
+
+        border-top: 0;
+        border-left: 0;
+        border-right: 0;
+        border-bottom: 1px solid $greyColor2;
+
+        &.focus {
+            border-bottom-color: $primaryColor;
+        }
+
+        img {
+            margin-right: 10px;
+            width: 20px;
+        }
+
+        input {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+    }
+
+    .link {
+        text-align: center;
+        margin-top: 24px;
+
+        p {
+            color: $greyColor2;
+            margin: 0 0 2px;
+        }
+
+        a {
+            color: $primaryColor;
+            font-family: $fontBold;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    }
+
+}
