@@ -12,6 +12,12 @@
         height: 12%;
         max-width: 228px;
     }
+
+    &.register {
+        .logo {
+            display: none;
+        }
+    }
     
     p {
         text-align: center;
@@ -100,6 +106,12 @@
             max-width: none;
             margin: 0;
             min-width: 40%;
+        }
+
+        &.register {
+            .logo {
+                display: block;
+            }
         }
 
         p{

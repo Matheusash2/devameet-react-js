@@ -1,0 +1,133 @@
+@import './configs.scss';
+
+.container-modal {
+    margin-top: 150px;
+
+    .modal-content {
+        border-radius: 15px;
+    }
+
+    .modal-body {
+        .content {
+            padding: 10px;
+
+            p {
+                font-weight: 600;
+                font-size: 12px;
+                line-height: 17px;
+                color: $greyColor2;
+                margin: 0;  
+            }
+
+            span {
+                font-size: 16px;
+                font-weight: 500;
+                line-height: 22px;
+                color: $primaryColor;
+            }
+
+            .line {
+                margin: 16px 0;
+                width: 100%;
+                height: 0;
+                border-bottom: 1px solid $greyColor1;
+            }
+
+            .avatars-scroll {
+                overflow-y: scroll;
+                max-height: 200px;
+
+                &::-webkit-scrollbar {
+                    width: 6px;
+                }
+            
+                &::-webkit-scrollbar-track {
+                    background-color: $primaryColorWithOpacity1;
+                }
+            
+                &::-webkit-scrollbar-thumb {
+                    background-color: $primaryColor;
+                    border-radius: 8px;
+                }
+
+                .avatars {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    flex-wrap: wrap;
+
+                    .container-avatar {
+                        margin: 3px;
+                        width: 29.8%;
+                        height: 23vw;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        background-color: $primaryColor4;
+                        border: 2px solid $primaryColor4;
+                        border-radius: 4px;
+
+                        &.selected {
+                            border-color: $primaryColor;
+                        }
+
+                        img {
+                            height: 90%;
+                        }
+                    }
+                }
+            }
+
+            .actions {
+                margin-top: 16px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                span {
+                    cursor: pointer;
+                    text-decoration: underline;
+                    margin-right: 20px;
+                }
+
+                button {
+                    margin: 0;
+                    width: 50%;
+                }
+            }
+        }
+    }
+
+    @media screen and (min-width: $desktoBreakpoint) {
+        margin-top: 100px;
+
+        .modal-content {
+            .modal-body {
+                .content {
+                    .avatars-scroll {
+                        height: 370px;
+
+                        .avatars {
+                            .container-avatar {
+                                width: 28%;
+                                height: 9.5vw;
+                                margin: 8px;
+                                cursor: pointer;
+
+                                &:hover {
+                                    border-color: $greyColor2;
+                                }
+
+                                &.selected {
+                                    &:hover {
+                                        border-color: $primaryColor;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
