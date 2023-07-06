@@ -1,0 +1,29 @@
+@import './configs.scss';
+
+.container-principal {
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+
+    .container-meet {
+        width: 100%;
+        display: flex;
+        flex: 1;
+        align-items: flex-start;
+        justify-content: flex-start;
+        background-color: $white;
+    }
+
+    @media screen and (min-width: $desktoBreakpoint) {
+
+        .container-meet {
+            width: 25%;
+            border-right: 1px solid  $greyColor1;
+            box-shadow: 1px 0px 5px 0px $greyColor1;
+        }
+        
+    }
+}
