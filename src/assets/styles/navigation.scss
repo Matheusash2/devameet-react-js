@@ -1,0 +1,60 @@
+@import './configs.scss';
+
+.container-navigation {
+
+    ul {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        padding: 0;
+        margin: 10px 0;
+
+        li {
+            list-style: none;
+            cursor: pointer;
+
+            &.disabled {
+                cursor: auto;
+            }
+
+            .iconeNav {
+                margin-right: 0;
+                width: 24px;
+                height: 24px;   
+            }
+
+            .mini {
+                width: 24px;
+                height: 24px;
+                border-color: $greyColor3;
+
+                &.selected {
+                    border-color: $primaryColor;
+                }
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+
+            @media screen and (min-width: $desktoBreakpoint) {
+                .iconeNav {
+                    margin-right: 30px;
+                    width: 32px;
+                    height: 32px;   
+                }
+
+                .mini {
+                    width: 32px;
+                    height: 32px;
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+            }
+        }
+    }
+}

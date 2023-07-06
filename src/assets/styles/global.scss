@@ -31,6 +31,7 @@ html, body {
     width: 100%;
     height: 100%;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     -webkit-box-align: center;
@@ -150,3 +151,5 @@ body {
 @import './avatar_input.scss';
 @import './modal.scss';
 @import './header.scss';
+@import './navigation.scss';
+@import './footer.scss';
