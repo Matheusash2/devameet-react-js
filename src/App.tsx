@@ -1,5 +1,5 @@
 import { RouterProvider } from "react-router-dom";
-import { getRouter } from "../router";
+import { getRouter } from "./router";
 import { createContext, useState } from "react";
 
 export const AuthorizeContext = createContext<any>(null);

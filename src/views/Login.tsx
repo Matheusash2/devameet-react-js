@@ -5,7 +5,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import logo from '../assets/images/logo.svg';
 import loginIcon from '../assets/images/mail.svg';
 import passwordIcon from '../assets/images/key.svg';
-import { AuthorizeContext } from "./App";
+import { AuthorizeContext } from "../App";
 
 const loginServices = new LoginServices();
 
