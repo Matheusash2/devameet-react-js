@@ -17,6 +17,10 @@
         color: $greyColor3;
         font-family: $fontBold;
         cursor: pointer;
+
+        &.disabled {
+            cursor: not-allowed;
+        }
     }
 
     strong {
