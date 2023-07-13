@@ -21,7 +21,7 @@
 
             span {
                 font-size: 16px;
-                font-weight: 500;
+                font-weight: 700;
                 line-height: 22px;
                 color: $primaryColor;
             }
@@ -92,7 +92,27 @@
 
                 button {
                     margin: 0;
-                    width: 50%;
+                    width: 35%;
+                }
+            }
+
+            .container {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+
+                span {
+                    font-size: 18px;
+                    line-height: 120%;
+                    margin-bottom: 16px;
+                }
+
+                p {
+                    font-size: 16px;
+                    font-weight: 400;
+                    line-height: 24px;
                 }
             }
         }

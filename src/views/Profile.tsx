@@ -53,8 +53,6 @@ export const Profile = () => {
                 localStorage.setItem('avatar', image);
             }
 
-            alert("Atualização concluída com sucesso!");
-
             return navigate(-1);
         } catch (e: any) {
             if (e?.response?.data?.message) {
