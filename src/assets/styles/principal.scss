@@ -4,27 +4,60 @@
     width: 100%;
     flex: 1;
     display: flex;
-    flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
 
     .container-meet {
         width: 100%;
+        height: 100%;
         display: flex;
         flex-direction: column;
-        flex: 1;
         align-items: flex-start;
         justify-content: flex-start;
         background-color: $white;
     }
 
+    
     @media screen and (min-width: $desktoBreakpoint) {
-
+        
         .container-meet {
             width: 25%;
             border-right: 1px solid  $greyColor1;
             box-shadow: 1px 0px 5px 0px $greyColor1;
         }
         
+        .container-objects {
+            display: flex;
+            flex: 1;
+            max-height: 100%;
+            max-width: 100%;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 32px 0;
+            
+            .center {
+                display: flex;
+                align-items: flex-start;
+                justify-content: center;
+                
+                .grid {
+                    display: flex;
+                    position: relative;
+                    width: 35vw;
+                    aspect-ratio: 1/1;
+                    flex-shrink: 0;
+                    background-color: $white;
+                    box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.14);
+                }
+    
+                .actions {
+                    div {
+                       img {
+    
+                       } 
+                    }
+                }
+            }
+        }
     }
 }

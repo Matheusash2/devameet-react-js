@@ -20,7 +20,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        
+
         p {
             font-size: 16px;
             font-weight: 700;
@@ -32,6 +32,48 @@
 
         img {
             cursor: pointer;
+        }
+
+        input {
+            padding: 0;
+            width: 100%;
+            font-weight: 700;
+
+            &::-webkit-input-placeholder {
+                color: $primaryColor;
+            }
+
+            &:-moz-placeholder {
+                color: $primaryColor;
+            }
+
+            &::-moz-placeholder {
+                color: $primaryColor;
+            }
+
+            &:-ms-input-placeholder {
+                color: $primaryColor;
+            }
+
+            &:focus {
+                border-bottom: 0.5px solid $primaryColor;
+            }
+        }
+
+        .color-select {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            cursor: pointer;
+            width: 20%;
+
+            .circle {
+                width: 24px;
+                height: 24px;
+                border-radius: 24px;
+                border: 0.5px solid $greyColor2;
+                margin-right: 8px;
+            }
         }
     }
 
