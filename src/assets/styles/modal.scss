@@ -1,5 +1,12 @@
 @import './configs.scss';
 
+@mixin hover-selected-effect {
+      opacity: 1;
+      border-radius: 0;
+      width: 75px;
+      height: 75px;
+}
+
 .container-modal {
     margin-top: 150px;
 
@@ -113,6 +120,31 @@
                     font-size: 16px;
                     font-weight: 400;
                     line-height: 24px;
+                }
+
+                .colors {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    flex-wrap: wrap;
+
+                    div {
+                        width: 64px;
+                        height: 64px;
+                        margin: 4px;
+                        cursor: pointer;
+                        opacity: 0.5;
+                        border-radius: 50%;
+                        transition: all 0.3s ease;
+                        
+                        &.selected {
+                            @include hover-selected-effect;
+                        }
+                        
+                        &:hover {
+                            @include hover-selected-effect;
+                        }
+                    }
                 }
             }
         }
