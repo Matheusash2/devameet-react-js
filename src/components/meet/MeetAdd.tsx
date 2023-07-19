@@ -42,7 +42,7 @@ export const MeetAdd = () => {
     return (
         <div className="container-principal">
             <div className="container-meet">
-                <MeetAddEditHeader
+                <MeetAddEditHeader isEdit={false}
                     name={name} setName={setName}
                     color={color} setColor={setColor}
                 />

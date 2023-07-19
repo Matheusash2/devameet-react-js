@@ -131,8 +131,8 @@ body {
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 60%;
-    overflow-x: scroll;
+    height: 60vh;
+    overflow-x: auto;
     align-items: flex-end;
     justify-content: flex-start;
 
@@ -163,3 +163,4 @@ body {
 @import './meet_user_header.scss';
 @import './meet_list.scss';
 @import './meet_list_item.scss';
+@import './object_picker.scss';

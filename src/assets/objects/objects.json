@@ -1,0 +1,135 @@
+{
+    "wall": {
+        "path": "wall",
+        "selectMultiple": false,
+        "canRotate": false,
+        "defaultXPosition": 0,
+        "defaultYPosition": 0,
+        "defaultZIndex": 0,
+        "flexStart": true,
+        "objects": [
+            "wall_01",
+            "wall_02",
+            "wall_03"  
+        ]
+    },
+
+    "floor": {
+        "path": "floor",
+        "selectMultiple": false,
+        "canRotate": false,
+        "defaultXPosition": 0,
+        "defaultYPosition": 1,
+        "defaultZIndex": 0,
+        "flexStart": true,
+        "objects": [
+            "floor_01",
+            "floor_02",
+            "floor_03",
+            "floor_04",
+            "floor_05",
+            "floor_06"
+        ]
+    },
+
+    "rug": {
+        "path": "rug",
+        "selectMultiple": true,
+        "canRotate": false,
+        "defaultXPosition": 2,
+        "defaultYPosition": 3,
+        "defaultZIndex": 1,
+        "objects": [
+            "rug_01",
+            "rug_02",
+            "rug_03"
+        ]
+    },
+
+    "table": {
+        "path": "table",
+        "selectMultiple": true,
+        "canRotate": false,
+        "defaultXPosition": 2,
+        "defaultYPosition": 3,
+        "defaultZIndex": 2,
+        "objects": [
+            "table_01",
+            "table_02",
+            "table_03",
+            "table_04",
+            "table_05",
+            "table_06"
+        ]
+    },
+
+    "chair": {
+        "path": "chair",
+        "selectMultiple": true,
+        "canRotate": true,
+        "defaultXPosition": 2,
+        "defaultYPosition": 3,
+        "defaultZIndex": 2,
+        "objects": [
+            "chair_01_blue",
+            "chair_01_red",
+            "chair_01_white",
+            "chair_01_yellow",
+            "chair_02",
+            "chair_03"
+        ]
+    },
+
+    "couch": {
+        "path": "couch",
+        "selectMultiple": true,
+        "canRotate": true,
+        "defaultXPosition": 2,
+        "defaultYPosition": 3,
+        "defaultZIndex": 2,
+        "objects": [
+            "couch_01",
+            "couch_02",
+            "couch_03"
+        ]
+    },
+
+    "decor": {
+        "path": "decor",
+        "selectMultiple": true,
+        "canRotate": false,
+        "defaultXPosition": 2,
+        "defaultYPosition": 3,
+        "defaultZIndex": 3,
+        "objects": [
+            "decor_01",
+            "decor_02",
+            "decor_03",
+            "decor_04",
+            "decor_05",
+            "decor_06",
+            "decor_07",
+            "decor_08"
+        ]
+    },
+
+    "nature": {
+        "path": "nature",
+        "selectMultiple": true,
+        "canRotate": false,
+        "defaultXPosition": 2,
+        "defaultYPosition": 3,
+        "defaultZIndex": 3,
+        "objects": [
+            "nature_01",
+            "nature_02",
+            "nature_03",
+            "nature_04",
+            "nature_05",
+            "nature_06",
+            "nature_07",
+            "nature_08",
+            "nature_09"
+        ]
+    }
+}
