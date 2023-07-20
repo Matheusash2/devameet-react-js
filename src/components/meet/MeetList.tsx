@@ -53,6 +53,7 @@ export const MeetList = () => {
 
     return (
         <>
+        <div className="scroll">
             <div className="container-meet-list">
                 {meets && meets.length > 0
                     ?
@@ -63,6 +64,7 @@ export const MeetList = () => {
                         <p>Você ainda não possui reuniões criadas :(</p>
                     </div>}
             </div>
+        </div>
             <Modal
                 show={showModal}
                 onHide={() => setShowModal(false)}
