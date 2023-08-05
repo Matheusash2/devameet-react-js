@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 import addIcon from "../../assets/images/add.svg";
 import { useNavigate } from "react-router-dom";
 
-export const MeetUserHeader = () => {
+type MeetUserHeaderProps = {
+    isLink? : boolean,
+}
+
+export const MeetUserHeader: React.FC<MeetUserHeaderProps> = ({isLink}) => {
 
     const [mobile, setMobile] = useState(window.innerWidth <= 992);
     const name = localStorage.getItem('name') || '';
@@ -26,7 +30,7 @@ export const MeetUserHeader = () => {
 
     return (
         <div className="container-user-header">
-            <span>Minhas reuniões</span>
+            <span>{isLink ? "Reunião" : "Minhas reuniões"}</span>
             <div>
                 <p>Olá, {name}</p>
                 {!mobile && <img src={addIcon} alt="Adicionar reunião" onClick={navigateToAdd} />}

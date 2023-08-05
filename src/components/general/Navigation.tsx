@@ -59,7 +59,7 @@ export const Navigation = () => {
                 {mobile
                 ?
                     <li>
-                        <img src={getIcon('room')} alt="Entrar na reunião" className="iconeNav" onClick={() => navigate('link')}/>
+                        <img src={getIcon('room')} alt="Entrar na reunião" className="iconeNav" onClick={() => navigate('/link')}/>
                     </li>   
                 :
                     <li className="disabled">
@@ -67,7 +67,7 @@ export const Navigation = () => {
                     </li>
                 }
                 <li>
-                    <div className={"avatar mini " + getSelectedClass()} onClick={() => navigate('user')}>
+                    <div className={"avatar mini " + getSelectedClass()} onClick={() => navigate('/user')}>
                         <img src={avatarImage()} alt="Editar usuário" />
                     </div>
                 </li>

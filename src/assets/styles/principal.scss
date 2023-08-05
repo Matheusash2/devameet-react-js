@@ -15,6 +15,52 @@
         align-items: flex-start;
         justify-content: flex-start;
         background-color: $white;
+
+        &.link {
+            align-items: center;
+        }
+
+        .error {
+            color: $error;
+            text-align: center;
+            font-weight: bold;
+            margin-top: 20px;
+            margin-bottom: 0;
+        }
+
+        .input {
+            width: 82%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+            padding-bottom: 8px;
+            
+            border: none;
+            border-bottom: 1px solid $greyColor2;
+
+            &.focus{
+                border-color: $primaryColor;
+            }
+
+            img {
+                margin-right: 10px;
+            }
+
+            input {
+                flex: 1;
+                display: flex;
+                font-size: 14px;
+                font-weight: 400;
+                line-height: 24px;
+                letter-spacing: 0.14px;
+            }
+        }
+
+        button {
+            width: 82%;
+            margin-top: 40px;
+        }
     }
     
     @media screen and (min-width: $desktoBreakpoint) {

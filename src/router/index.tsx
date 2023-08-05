@@ -5,9 +5,10 @@ import { Home } from "../views/Home";
 import { Profile } from "../views/Profile";
 import { MeetAddView } from "../views/MeetAddView";
 import { MeetEditView } from "../views/MeetEditView";
+import { LinkView } from "../views/Link";
 
 export const getRouter = (token: string) => {
-    if(!token) {
+    if (!token) {
         return createBrowserRouter([
             {
                 path: '*',
@@ -20,8 +21,8 @@ export const getRouter = (token: string) => {
                 element: <Register />
             }
         ]);
-    }else{
-        
+    } else {
+
         const router = [
             {
                 path: '*',
@@ -29,25 +30,31 @@ export const getRouter = (token: string) => {
                 element: <Home />
             },
             {
-                path:'/user',
+                path: '/user',
                 id: 'user',
                 element: <Profile />
-            }
+            },
         ];
 
         const mobile = window.innerWidth <= 992;
 
-        if(!mobile) {
+        if (!mobile) {
             router.push({
-                path:'/add',
+                path: '/add',
                 id: 'add',
                 element: <MeetAddView />
             });
-            
+
             router.push({
-                path:'/edit/:meetId',
+                path: '/edit/:meetId',
                 id: 'edit',
                 element: <MeetEditView />
+            });
+        } else {
+            router.push({
+                path: '/link',
+                id: 'link',
+                element: <LinkView />
             });
         }
 
