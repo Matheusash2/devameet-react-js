@@ -35,7 +35,7 @@
         color: $primaryColor;
     }
 
-    @media screen and (min-width: $desktoBreakpoint) {
+    @media screen and (min-width: $desktopBreakpoint) {
         padding: 24px 0;
 
         span {

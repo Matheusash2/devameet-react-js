@@ -1,9 +1,242 @@
 @import './configs.scss';
 
 .container-objects {
-    display: none;
+    flex: 1;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
 
-    @media screen and (min-width: $desktoBreakpoint) {
+    .grid {
+        display: flex;
+        position: relative;
+        width: 100vw;
+        aspect-ratio: 1/1;
+        flex-shrink: 0;
+        background-color: $white;
+        box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.14);
+
+        .line {
+            position: absolute;
+            height: 0;
+            margin: 0;
+
+            &.row {
+                width: 100%;
+                left: 0;
+                border-bottom: 0.5px solid $primaryColor;
+
+                &.one {
+                    top: 12.5%;
+                }
+
+                &.two {
+                    top: 25%;
+                }
+
+                &.three {
+                    top: 37.5%;
+                }
+
+                &.four {
+                    top: 50%;
+                }
+
+                &.five {
+                    top: 62.5%;
+                }
+
+                &.six {
+                    top: 75%;
+                }
+
+                &.seven {
+                    top: 87.5%;
+                }
+            }
+
+            &.column {
+                height: 100%;
+                top: 0;
+                border-left: 0.5px solid $primaryColor;
+
+                &.one {
+                    left: 12.5%;
+                }
+
+                &.two {
+                    left: 25%;
+                }
+
+                &.three {
+                    left: 37.5%;
+                }
+
+                &.four {
+                    left: 50%;
+                }
+
+                &.five {
+                    left: 62.5%;
+                }
+
+                &.six {
+                    left: 75%;
+                }
+
+                &.seven {
+                    left: 87.5%;
+                }
+            }
+        }
+
+        img {
+            position: absolute;
+
+            &.rotated {
+                height: 25% !important;
+                width: 12.5% !important;
+            }
+
+            &.wall-object {
+                width: 100%;
+                height: 12.5%;
+            }
+
+            &.floor-object {
+                width: 100%;
+                height: 87.5%;
+            }
+
+            &.rug-object {
+                width: 25%;
+                height: 37.5%;
+            }
+
+            &.table-object {
+                width: 25%;
+                height: 25%;
+            }
+
+            &.chair-object {
+                width: 12.5%;
+                height: 12.5%;
+                padding: 0 0.5%;
+            }
+
+            &.couch-object {
+                width: 25%;
+                height: 12.5%;
+            }
+
+            &.decor-object {
+                width: 12.5%;
+                height: 12.5%;
+                padding: 1%;
+            }
+
+            &.nature-object {
+                width: 12.5%;
+                height: 25%;
+                padding-top: 5%;
+            }
+
+            &.row-one {
+                top: 0%;
+            }
+
+            &.row-two {
+                top: 12.5%;
+            }
+
+            &.row-three {
+                top: 25%;
+            }
+
+            &.row-four {
+                top: 37.5%;
+            }
+
+            &.row-five {
+                top: 50%;
+            }
+
+            &.row-six {
+                top: 62.5%;
+            }
+
+            &.row-seven {
+                top: 75%;
+            }
+
+            &.row-eight {
+                top: 87.5%;
+            }
+
+            &.column-one {
+                left: 0%;
+            }
+
+            &.column-two {
+                left: 12.5%;
+            }
+
+            &.column-three {
+                left: 25%;
+            }
+
+            &.column-four {
+                left: 37.5%;
+            }
+
+            &.column-five {
+                left: 50%;
+            }
+
+            &.column-six {
+                left: 62.5%;
+            }
+
+            &.column-seven {
+                left: 75%;
+            }
+
+            &.column-eight {
+                left: 87.5%;
+            }
+        }
+
+        .preview {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+            z-index: 30;
+            background-color: $greyColorWithOpacity1;
+
+            img {
+                width: 68px;
+                height: 68px;
+                position: relative;
+                margin-bottom: 3%;
+                cursor: auto;
+            }
+
+            button {
+                width: 30%;
+                height: 8%;
+                border: 2px solid $white;
+                background-color: transparent;
+                font-size: 12px;
+                font-weight: 600;
+                line-height: 120%;
+                letter-spacing: 0.165px;
+            }
+        }
+    }
+
+    @media screen and (min-width: $desktopBreakpoint) {
 
         display: flex;
         flex: 1;
@@ -27,225 +260,25 @@
                 background-color: $white;
                 box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.14);
 
-                .line {
-                    position: absolute;
-                    height: 0;
-                    margin: 0;
-
-                    &.row {
-                        width: 100%;
-                        left: 0;
-                        border-bottom: 0.5px solid $primaryColor;
-
-                        &.one {
-                            top: 12.5%;
-                        }
-
-                        &.two {
-                            top: 25%;
-                        }
-
-                        &.three {
-                            top: 37.5%;
-                        }
-
-                        &.four {
-                            top: 50%;
-                        }
-
-                        &.five {
-                            top: 62.5%;
-                        }
-
-                        &.six {
-                            top: 75%;
-                        }
-
-                        &.seven {
-                            top: 87.5%;
-                        }
-                    }
-
-                    &.column {
-                        height: 100%;
-                        top: 0;
-                        border-left: 0.5px solid $primaryColor;
-
-                        &.one {
-                            left: 12.5%;
-                        }
-
-                        &.two {
-                            left: 25%;
-                        }
-
-                        &.three {
-                            left: 37.5%;
-                        }
-
-                        &.four {
-                            left: 50%;
-                        }
-
-                        &.five {
-                            left: 62.5%;
-                        }
-
-                        &.six {
-                            left: 75%;
-                        }
-
-                        &.seven {
-                            left: 87.5%;
-                        }
-                    }
-                }
-
                 img {
-                    position: absolute;
                     cursor: pointer;
 
                     &.selected {
                         filter: invert(25%) sepia(40%) saturate(4000%) hue-rotate(709deg) brightness(80%) contrast(104%);
                     }
-
-                    &.rotated {
-                        height: 25% !important;
-                        width: 12.5% !important;
-                    }
-
-                    &.wall-object {
-                        width: 100%;
-                        height: 12.5%;
-                    }
-
-                    &.floor-object {
-                        width: 100%;
-                        height: 87.5%;
-                    }
-
-                    &.rug-object {
-                        width: 25%;
-                        height: 37.5%;
-                    }
-
-                    &.table-object {
-                        width: 25%;
-                        height: 25%;
-                    }
-
-                    &.chair-object {
-                        width: 12.5%;
-                        height: 12.5%;
-                        padding: 0 0.5%;
-                    }
-
-                    &.couch-object {
-                        width: 25%;
-                        height: 12.5%;
-                    }
-
-                    &.decor-object {
-                        width: 12.5%;
-                        height: 12.5%;
-                        padding: 1%;
-                    }
-
-                    &.nature-object {
-                        width: 12.5%;
-                        height: 25%;
-                        padding-top: 5%;
-                    }
-
-                    &.row-one {
-                        top: 0%;
-                    }
-
-                    &.row-two {
-                        top: 12.5%;
-                    }
-
-                    &.row-three {
-                        top: 25%;
-                    }
-
-                    &.row-four {
-                        top: 37.5%;
-                    }
-
-                    &.row-five {
-                        top: 50%;
-                    }
-
-                    &.row-six {
-                        top: 62.5%;
-                    }
-
-                    &.row-seven {
-                        top: 75%;
-                    }
-
-                    &.row-eight {
-                        top: 87.5%;
-                    }
-
-                    &.column-one {
-                        left: 0%;
-                    }
-
-                    &.column-two {
-                        left: 12.5%;
-                    }
-
-                    &.column-three {
-                        left: 25%;
-                    }
-
-                    &.column-four {
-                        left: 37.5%;
-                    }
-
-                    &.column-five {
-                        left: 50%;
-                    }
-
-                    &.column-six {
-                        left: 62.5%;
-                    }
-
-                    &.column-seven {
-                        left: 75%;
-                    }
-
-                    &.column-eight {
-                        left: 87.5%;
-                    }
                 }
 
                 .preview {
-                    display: flex;
-                    flex-direction: column;
-                    width: 100%;
-                    height: 100%;
-                    justify-content: center;
-                    align-items: center;
-                    z-index: 30;
-                    background-color: $greyColorWithOpacity1;
 
                     img {
-                        position: relative;
-                        margin-bottom: 3%;
-                        cursor: auto;
+                        width: 120px;
+                        height: 120px;
                     }
 
                     button {
-                        width: 40%;
+                        width: 45%;
                         height: 10%;
-                        border: 2px solid $white;
-                        background-color: transparent;
-                        font-weight: 600;
-                        line-height: 120%;
-                        letter-spacing: 0.165px;
+                        font-size: 16px;
                     }
                 }
             }

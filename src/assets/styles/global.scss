@@ -82,7 +82,7 @@ button {
         cursor: not-allowed;
     }
 
-    @media screen and (min-width: $desktoBreakpoint) {
+    @media screen and (min-width: $desktopBreakpoint) {
         background-color: $greyColor2;
 
         &:hover {
@@ -119,7 +119,7 @@ button {
 }
 
 body {
-    @media screen and (min-width: $desktoBreakpoint) {
+    @media screen and (min-width: $desktopBreakpoint) {
         background-color: $primaryColorWithOpacity1;
         background-image: url('../images/background.svg');
         background-size: cover;
@@ -165,3 +165,4 @@ body {
 @import './meet_list_item.scss';
 @import './object_picker.scss';
 @import './objects.scss';
+@import './room.scss';
