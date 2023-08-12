@@ -221,6 +221,11 @@
                 border-radius: 20px;
                 margin-bottom: 4px;
                 padding: 2px 8px;
+                max-width: 100%;
+
+                &.muted {
+                    border-color: $muted;
+                }
                 
                 span {
                     font-size: 8px;
@@ -229,12 +234,20 @@
                     display: flex;
                     align-items: center;
                     justify-content: center;
+
+                    &.muted {
+                        color: $muted;
+                    }
                 }
             }
 
             .user-avatar-room {
                 position: relative;
                 width: 80%;
+
+                &.rotatedAvatar {
+                    height: 55%;
+                }
             }
 
             &.row-one {
@@ -330,6 +343,16 @@
                 line-height: 120%;
                 letter-spacing: 0.165px;
             }
+
+        }
+
+        .audio {
+            position: absolute;
+            cursor: pointer;
+            top: 88%;
+            left: 88%;
+            width: 32px;
+            z-index: 30;
         }
     }
 
@@ -349,13 +372,7 @@
             justify-content: center;
 
             .grid {
-                display: flex;
-                position: relative;
                 width: 35vw;
-                aspect-ratio: 1/1;
-                flex-shrink: 0;
-                background-color: $white;
-                box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.14);
 
                 img {
                     cursor: pointer;
@@ -399,6 +416,10 @@
                         cursor: pointer;
                     }
                 }
+            }
+
+            .audio {   
+                width: 48px;
             }
         }
     }

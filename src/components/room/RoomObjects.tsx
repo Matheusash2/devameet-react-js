@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 
-import linkPreviewIcon from "../../assets/images/link_preview.svg"
+import linkPreviewIcon from "../../assets/images/link_preview.svg";
+import micOnIcon from "../../assets/images/mic_on.svg";
+import micOffIcon from "../../assets/images/mic_off.svg";
 
 type RoomObjectsProps = {
     objects: Array<any>,
     connectedUsers: Array<any>,
     me: any
     enterRoom(): void,
+    toggleMute(): void,
 };
 
-export const RoomObjects: React.FC<RoomObjectsProps> = ({ enterRoom, objects, connectedUsers, me }) => {
+export const RoomObjects: React.FC<RoomObjectsProps> = ({ toggleMute, enterRoom, objects, connectedUsers, me }) => {
 
     const [objectsWithWidth, setObjectsWithWidth] = useState<Array<any>>([]);
     const mobile = window.innerWidth <= 992;
@@ -159,6 +162,20 @@ export const RoomObjects: React.FC<RoomObjectsProps> = ({ enterRoom, objects, co
         return '';
     }
 
+    const getMutedClass = (user: any) => {
+        if (user?.muted) {
+            return 'muted';
+        }
+        return '';
+    }
+
+    const getClassAvatarRotated = (object: any) => {
+        if (object.avatar && (object.orientation === 'right' || object.orientation === 'left')) {
+            return 'rotatedAvatar'
+        }
+        return '';
+    }
+
     return (
         <div className="container-objects">
             <div className="center">
@@ -174,20 +191,38 @@ export const RoomObjects: React.FC<RoomObjectsProps> = ({ enterRoom, objects, co
                     {
                         connectedUsers?.map((user: any) =>
                             <div key={user._id} className={'user-avatar ' + getClassFromObject(user)}>
-                                <div>
-                                    <span>{getName(user)}</span>
+                                <div className={getMutedClass(user)}>
+                                    <span className={getMutedClass(user)}>{getName(user)}</span>
                                 </div>
-                                <img className="user-avatar-room"
+                                <img className={"user-avatar-room " + getClassAvatarRotated(user)}
                                     src={getImageFromObject(user, true)}
                                     style={getObjectStyle(user)}
                                 />
                             </div>
                         )
                     }
-                    {(!connectedUsers || connectedUsers.length === 0) && <div className="preview">
-                        <img src={linkPreviewIcon} alt="Entrar na sala" />
-                        <button onClick={enterRoom}>Entrar na sala</button>
-                    </div>}
+                    {me?.user && me.muted &&
+                        <img
+                            src={micOffIcon}
+                            onClick={toggleMute}
+                            className="audio"
+                            alt="Microfone desligado"
+                        />
+                    }
+                    {me?.user && !me.muted &&
+                        <img
+                            src={micOnIcon}
+                            onClick={toggleMute}
+                            className="audio"
+                            alt="Microfone ligado"
+                        />
+                    }
+                    {(!connectedUsers || connectedUsers.length === 0) &&
+                        <div className="preview">
+                            <img src={linkPreviewIcon} alt="Entrar na sala" />
+                            <button onClick={enterRoom}>Entrar na sala</button>
+                        </div>
+                    }
                 </div>
             </div>
         </div>

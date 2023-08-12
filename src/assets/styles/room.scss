@@ -60,6 +60,30 @@
         }
     }
 
+    .movement {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        flex: 1;
+
+        .button {
+           display: flex;
+           align-items: center;
+           justify-content: center;
+           background-color: $primaryColor;
+           width: 80px;
+           height: 40px;
+           margin: 2.5px;
+           border-radius: 4px;
+           box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.20), 0px 2px 1px 0px rgba(0, 0, 0, 0.12), 0px 1px 1px 0px rgba(0, 0, 0, 0.14);
+        }
+
+        .line {
+            display: flex;
+        }
+    }
+
     @media screen and (min-width: $desktopBreakpoint) {
         background-color: transparent;
         background-image: none;
