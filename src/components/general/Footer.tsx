@@ -1,11 +1,9 @@
 import { Navigation } from "./Navigation";
 
-
 export const Footer = () => {
-
-    return(
+    return (
         <div className="container-footer">
             <Navigation />
         </div>
     );
-}
+};

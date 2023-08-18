@@ -1,23 +1,22 @@
 import { PublicInput } from "../general/PublicInput";
 import { MeetUserHeader } from "../meet/MeetUserHeader";
 import { useState } from "react";
-import linkActiveIcon from "../../assets/images/link_active.svg"
-import linkIcon from "../../assets/images/link.svg"
+import linkActiveIcon from "../../assets/images/link_active.svg";
+import linkIcon from "../../assets/images/link.svg";
 import { useNavigate } from "react-router-dom";
 
 export const RoomLink = () => {
-
     const navigate = useNavigate();
-    const [link, setLink] = useState('');
-    const [error, setError] = useState('');
+    const [link, setLink] = useState("");
+    const [error, setError] = useState("");
 
     const navigateToRoom = () => {
-        setError('');
-        if(link && link.length >= 8) {
-            return navigate('/room/'+link);
+        setError("");
+        if (link && link.length >= 8) {
+            return navigate("/room/" + link);
         }
-        setError('Link inválido, por favor verifique!');
-    }
+        setError("Link inválido, por favor verifique!");
+    };
 
     return (
         <div className="container-principal">
@@ -36,4 +35,4 @@ export const RoomLink = () => {
             </div>
         </div>
     );
-}
+};

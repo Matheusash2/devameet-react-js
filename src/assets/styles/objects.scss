@@ -1,4 +1,4 @@
-@import './configs.scss';
+@import "./configs.scss";
 
 .container-objects {
     flex: 1;
@@ -226,7 +226,7 @@
                 &.muted {
                     border-color: $muted;
                 }
-                
+
                 span {
                     font-size: 8px;
                     font-weight: 500;
@@ -343,7 +343,6 @@
                 line-height: 120%;
                 letter-spacing: 0.165px;
             }
-
         }
 
         .audio {
@@ -357,7 +356,6 @@
     }
 
     @media screen and (min-width: $desktopBreakpoint) {
-
         display: flex;
         flex: 1;
         max-height: 100%;
@@ -378,12 +376,12 @@
                     cursor: pointer;
 
                     &.selected {
-                        filter: invert(25%) sepia(40%) saturate(4000%) hue-rotate(709deg) brightness(80%) contrast(104%);
+                        filter: invert(25%) sepia(40%) saturate(4000%)
+                            hue-rotate(709deg) brightness(80%) contrast(104%);
                     }
                 }
 
                 .preview {
-
                     img {
                         width: 120px;
                         height: 120px;
@@ -418,7 +416,7 @@
                 }
             }
 
-            .audio {   
+            .audio {
                 width: 48px;
             }
         }

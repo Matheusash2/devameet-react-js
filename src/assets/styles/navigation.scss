@@ -1,7 +1,6 @@
-@import './configs.scss';
+@import "./configs.scss";
 
 .container-navigation {
-
     ul {
         display: flex;
         align-items: center;
@@ -20,7 +19,7 @@
             .iconeNav {
                 margin-right: 0;
                 width: 24px;
-                height: 24px;   
+                height: 24px;
             }
 
             .mini {
@@ -42,7 +41,7 @@
                 .iconeNav {
                     margin-right: 30px;
                     width: 32px;
-                    height: 32px;   
+                    height: 32px;
                 }
 
                 .mini {

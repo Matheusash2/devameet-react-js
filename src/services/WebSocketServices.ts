@@ -12,7 +12,7 @@ export class PeerConnectionSession {
     joinRoom(link: string, userId: string) {
         this._room = link;
         this._userId = userId;
-        this.socket.emit('join', { link, userId });
+        this.socket.emit("join", { link, userId });
     }
 
     onUpdateUserList(callback: any) {
@@ -28,19 +28,18 @@ export class PeerConnectionSession {
     }
 
     updateUserMovement(data: any) {
-        this.socket.emit('move', data);
+        this.socket.emit("move", data);
     }
 
     updateUserMute(data: any) {
-        this.socket.emit('toggl-mute-user', data);
+        this.socket.emit("toggl-mute-user", data);
     }
 }
 
 export const createPeerConnectionContext = () => {
-
     const { VITE_PUBLIC_WS_URL } = import.meta.env;
 
     const socket = io(VITE_PUBLIC_WS_URL);
 
     return new PeerConnectionSession(socket);
-}
+};

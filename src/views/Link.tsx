@@ -3,7 +3,6 @@ import { Header } from "../components/general/Header";
 import { RoomLink } from "../components/room/RoomLink";
 
 export const LinkView = () => {
-
     return (
         <>
             <Header />
@@ -11,4 +10,4 @@ export const LinkView = () => {
             <Footer />
         </>
     );
-}
+};

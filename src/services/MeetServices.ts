@@ -1,23 +1,22 @@
 import { HttpApiServices } from "./HttpApiServices";
 
 export class MeetServices extends HttpApiServices {
-
-    baseUrl = 'meet';
+    baseUrl = "meet";
 
     async getMeets() {
         return await this.get(this.baseUrl);
     }
 
     async getMeetById(id: string) {
-        return await this.get(this.baseUrl+'/'+id);
+        return await this.get(this.baseUrl + "/" + id);
     }
 
     async getMeetObjectsById(id: string) {
-        return await this.get(this.baseUrl+'/objects/'+id);
+        return await this.get(this.baseUrl + "/objects/" + id);
     }
 
     async deleteMeet(id: string) {
-        return await this.delete(this.baseUrl+'/'+id);
+        return await this.delete(this.baseUrl + "/" + id);
     }
 
     async createMeet(body: any) {
@@ -25,6 +24,6 @@ export class MeetServices extends HttpApiServices {
     }
 
     async updateMeet(body: any, id: string) {
-        return await this.put(this.baseUrl+'/'+id, body);
+        return await this.put(this.baseUrl + "/" + id, body);
     }
 }

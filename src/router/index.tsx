@@ -12,55 +12,54 @@ export const getRouter = (token: string) => {
     if (!token) {
         return createBrowserRouter([
             {
-                path: '*',
-                id: 'login',
-                element: <Login />
+                path: "*",
+                id: "login",
+                element: <Login />,
             },
             {
-                path: '/register',
-                id: 'register',
-                element: <Register />
-            }
+                path: "/register",
+                id: "register",
+                element: <Register />,
+            },
         ]);
     } else {
-
         const router = [
             {
-                path: '*',
-                id: 'home',
-                element: <Home />
+                path: "*",
+                id: "home",
+                element: <Home />,
             },
             {
-                path: '/user',
-                id: 'user',
-                element: <Profile />
+                path: "/user",
+                id: "user",
+                element: <Profile />,
             },
             {
-                path: '/room/:link',
-                id: 'room',
-                element: <RoomView />
-            }
+                path: "/room/:link",
+                id: "room",
+                element: <RoomView />,
+            },
         ];
 
         const mobile = window.innerWidth <= 992;
 
         if (!mobile) {
             router.push({
-                path: '/add',
-                id: 'add',
-                element: <MeetAddView />
+                path: "/add",
+                id: "add",
+                element: <MeetAddView />,
             });
 
             router.push({
-                path: '/edit/:meetId',
-                id: 'edit',
-                element: <MeetEditView />
+                path: "/edit/:meetId",
+                id: "edit",
+                element: <MeetEditView />,
             });
         } else {
             router.push({
-                path: '/link',
-                id: 'link',
-                element: <LinkView />
+                path: "/link",
+                id: "link",
+                element: <LinkView />,
             });
         }
 

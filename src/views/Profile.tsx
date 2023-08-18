@@ -14,11 +14,10 @@ const loginServices = new LoginServices();
 const userServices = new UserServices();
 
 export const Profile = () => {
-
     const navigate = useNavigate();
     const { setToken } = useContext(AuthorizeContext);
-    const [name, setName] = useState(localStorage.getItem('name') || '');
-    const [image, setImage] = useState(localStorage.getItem('avatar') || '');
+    const [name, setName] = useState(localStorage.getItem("name") || "");
+    const [image, setImage] = useState(localStorage.getItem("avatar") || "");
     const [mobile, setMobile] = useState(window.innerWidth <= 992);
 
     useEffect(() => {
@@ -47,38 +46,52 @@ export const Profile = () => {
 
             await userServices.update(body);
 
-            localStorage.setItem('name', name);
+            localStorage.setItem("name", name);
 
             if (image) {
-                localStorage.setItem('avatar', image);
+                localStorage.setItem("avatar", image);
             }
 
             return navigate(-1);
         } catch (e: any) {
             if (e?.response?.data?.message) {
-                console.log('Ocorreu erro ao atualizar dados do usuario:', e.response?.data?.message);
+                console.log(
+                    "Ocorreu erro ao atualizar dados do usuario:",
+                    e.response?.data?.message
+                );
             } else {
-                console.log('Ocorreu erro ao atualizar dados do usuario:', e);
+                console.log("Ocorreu erro ao atualizar dados do usuario:", e);
             }
         }
     };
 
     const logout = () => {
         loginServices.logout(setToken);
-        navigate('/');
-    }
+        navigate("/");
+    };
 
     return (
         <>
             {!mobile && <Header />}
             <div className="container-profile">
-                <ActionHeader actionCallback={finishUpdate} disabled={!name}/>
+                <ActionHeader actionCallback={finishUpdate} disabled={!name} />
                 <AvatarInput image={image} setImage={setImage} />
                 <div className="input">
                     <div>
                         <span>Nome</span>
-                        <input type="text" placeholder="Informe seu nome" value={name} onChange={e => setName(e.target.value)} />
-                        {name && <img src={clearIcon} alt="Limpar" onClick={() => setName('')} />}
+                        <input
+                            type="text"
+                            placeholder="Informe seu nome"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                        />
+                        {name && (
+                            <img
+                                src={clearIcon}
+                                alt="Limpar"
+                                onClick={() => setName("")}
+                            />
+                        )}
                     </div>
                 </div>
                 <div className="logout">
@@ -91,4 +104,4 @@ export const Profile = () => {
             <Footer />
         </>
     );
-}
+};

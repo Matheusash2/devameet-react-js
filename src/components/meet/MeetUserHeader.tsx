@@ -3,13 +3,12 @@ import addIcon from "../../assets/images/add.svg";
 import { useNavigate } from "react-router-dom";
 
 type MeetUserHeaderProps = {
-    isLink? : boolean,
-}
+    isLink?: boolean;
+};
 
-export const MeetUserHeader: React.FC<MeetUserHeaderProps> = ({isLink}) => {
-
+export const MeetUserHeader: React.FC<MeetUserHeaderProps> = ({ isLink }) => {
     const [mobile, setMobile] = useState(window.innerWidth <= 992);
-    const name = localStorage.getItem('name') || '';
+    const name = localStorage.getItem("name") || "";
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -25,16 +24,22 @@ export const MeetUserHeader: React.FC<MeetUserHeaderProps> = ({isLink}) => {
     }, []);
 
     const navigateToAdd = () => {
-        navigate('/add');
-    }
+        navigate("/add");
+    };
 
     return (
         <div className="container-user-header">
             <span>{isLink ? "Reunião" : "Minhas reuniões"}</span>
             <div>
                 <p>Olá, {name}</p>
-                {!mobile && <img src={addIcon} alt="Adicionar reunião" onClick={navigateToAdd} />}
+                {!mobile && (
+                    <img
+                        src={addIcon}
+                        alt="Adicionar reunião"
+                        onClick={navigateToAdd}
+                    />
+                )}
             </div>
         </div>
-    )
-}
+    );
+};

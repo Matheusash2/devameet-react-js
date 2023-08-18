@@ -1,4 +1,4 @@
-@import './configs.scss';
+@import "./configs.scss";
 
 .container-upload-image {
     cursor: pointer;
@@ -8,7 +8,7 @@
     }
 
     &::after {
-        content: url('../images/edit_avatar.svg');
+        content: url("../images/edit_avatar.svg");
         width: 48px;
         height: 48px;
         position: relative;

@@ -1,19 +1,19 @@
-@import 'bootstrap/scss/bootstrap.scss';
-@import './configs.scss';
+@import "bootstrap/scss/bootstrap.scss";
+@import "./configs.scss";
 
 @font-face {
     font-family: $fontRegular;
-    src: url('../fonts/BiennaleRegular.otf');
+    src: url("../fonts/BiennaleRegular.otf");
 }
 
 @font-face {
     font-family: $fontBold;
-    src: url('../fonts/BiennaleBold.otf');
+    src: url("../fonts/BiennaleBold.otf");
 }
 
 @font-face {
     font-family: $fontLight;
-    src: url('../fonts/BiennaleLight.otf');
+    src: url("../fonts/BiennaleLight.otf");
 }
 
 * {
@@ -21,7 +21,8 @@
     font-size: 14px;
 }
 
-html, body {
+html,
+body {
     height: 100%;
     margin: 0;
 }
@@ -63,8 +64,6 @@ input {
     &::-ms-input-placeholder {
         color: $greyColor2;
     }
-
-
 }
 
 button {
@@ -121,9 +120,8 @@ button {
 body {
     @media screen and (min-width: $desktopBreakpoint) {
         background-color: $primaryColorWithOpacity1;
-        background-image: url('../images/background.svg');
+        background-image: url("../images/background.svg");
         background-size: cover;
-    
     }
 }
 
@@ -148,21 +146,20 @@ body {
         background-color: $primaryColor;
         border-radius: 8px;
     }
-
 }
 
-@import './public.scss';
-@import './avatar_input.scss';
-@import './modal.scss';
-@import './header.scss';
-@import './navigation.scss';
-@import './footer.scss';
-@import './principal.scss';
-@import './action_header.scss';
-@import './profile.scss';
-@import './meet_user_header.scss';
-@import './meet_list.scss';
-@import './meet_list_item.scss';
-@import './object_picker.scss';
-@import './objects.scss';
-@import './room.scss';
+@import "./public.scss";
+@import "./avatar_input.scss";
+@import "./modal.scss";
+@import "./header.scss";
+@import "./navigation.scss";
+@import "./footer.scss";
+@import "./principal.scss";
+@import "./action_header.scss";
+@import "./profile.scss";
+@import "./meet_user_header.scss";
+@import "./meet_list.scss";
+@import "./meet_list_item.scss";
+@import "./object_picker.scss";
+@import "./objects.scss";
+@import "./room.scss";

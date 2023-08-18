@@ -18,19 +18,21 @@ const meetServices = new MeetServices();
 
 export const MeetEdit = () => {
     const [index, setIndex] = useState(0);
-    const [id, setId] = useState('');
-    const [name, setName] = useState('');
-    const [color, setColor] = useState('');
+    const [id, setId] = useState("");
+    const [name, setName] = useState("");
+    const [color, setColor] = useState("");
     const [selected, setSelected] = useState<any>({});
     const [objects, setObjects] = useState<any>([]);
 
     const navigate = useNavigate();
 
-    const isFormInvalid = (
-        !id || id.trim().length < 5 ||
-        !name || name.trim().length < 5 ||
-        !color || color.trim().length < 4
-    );
+    const isFormInvalid =
+        !id ||
+        id.trim().length < 5 ||
+        !name ||
+        name.trim().length < 5 ||
+        !color ||
+        color.trim().length < 4;
 
     const { meetId } = useParams();
 
@@ -52,17 +54,16 @@ export const MeetEdit = () => {
         const objectsResult = await meetServices.getMeetObjectsById(meetId);
         if (objectsResult?.data) {
             const newObjects = objectsResult?.data?.map((e: any) => {
-                return { ...e, type: e?.name?.split('_')[0] }
+                return { ...e, type: e?.name?.split("_")[0] };
             });
 
             setObjects(newObjects);
         }
-
-    }
+    };
 
     useEffect(() => {
         getMeet();
-    }, [])
+    }, []);
 
     const setObject = (object: any) => {
         const newIndex = index + 1;
@@ -79,16 +80,19 @@ export const MeetEdit = () => {
         }
 
         setSelected(object);
-    }
+    };
 
     const removeObject = (object: any) => {
         const filtered = objects.filter((o: any) => o._id !== object._id);
         setObjects(filtered);
         setSelected(null);
-    }
+    };
 
     const rotateObject = (object: any, to: string) => {
-        if (object?._id && (object.type === "chair" || object.type === "couch")) {
+        if (
+            object?._id &&
+            (object.type === "chair" || object.type === "couch")
+        ) {
             const index = objects?.indexOf(object);
             if (to === "left") {
                 switch (object.orientation) {
@@ -104,7 +108,8 @@ export const MeetEdit = () => {
                     case "left":
                         object.orientation = "front";
                         break;
-                    default: break;
+                    default:
+                        break;
                 }
             } else if (to === "right") {
                 switch (object.orientation) {
@@ -120,7 +125,8 @@ export const MeetEdit = () => {
                     case "right":
                         object.orientation = "front";
                         break;
-                    default: break;
+                    default:
+                        break;
                 }
             }
             setSelected(object);
@@ -128,11 +134,11 @@ export const MeetEdit = () => {
             const newArray = [...objects];
             setObjects(newArray);
         }
-    }
+    };
 
     const goBack = () => {
         return navigate(-1);
-    }
+    };
 
     const doUpdate = async () => {
         try {
@@ -143,22 +149,30 @@ export const MeetEdit = () => {
             const body = {
                 name,
                 color,
-                objects
-            }
-            
+                objects,
+            };
+
             await meetServices.updateMeet(body, id);
-            return navigate('/');
+            return navigate("/");
         } catch (e: any) {
             if (e?.response?.data?.message) {
-                console.log('Erro ao editar reunião:', e?.response?.data?.message);
+                console.log(
+                    "Erro ao editar reunião:",
+                    e?.response?.data?.message
+                );
             } else {
-                console.log('Erro ao editar reunião:', e);
+                console.log("Erro ao editar reunião:", e);
             }
         }
-    }
+    };
 
     const moveSelected = (event: any, selected: any) => {
-        if (selected && selected._id && selected.type !== "wall" && selected.type !== "floor") {
+        if (
+            selected &&
+            selected._id &&
+            selected.type !== "wall" &&
+            selected.type !== "floor"
+        ) {
             const index = objects?.indexOf(selected);
 
             switch (event?.key) {
@@ -174,40 +188,103 @@ export const MeetEdit = () => {
                 case "ArrowRight":
                     selected.x = selected.x < 7 ? selected.x + 1 : 7;
                     break;
-                default: break;
+                default:
+                    break;
             }
             setSelected(selected);
             objects[index] = selected;
             const newArray = [...objects];
             setObjects(newArray);
         }
-    }
+    };
 
     return (
         <div className="container-principal">
             <div className="container-meet">
-                <MeetAddEditHeader isEdit={true}
-                    name={name} setName={setName}
-                    color={color} setColor={setColor}
+                <MeetAddEditHeader
+                    isEdit={true}
+                    name={name}
+                    setName={setName}
+                    color={color}
+                    setColor={setColor}
                 />
                 <div className="scroll">
-                    <MeetObjectPicker asset={objectsJson.wall} label="Paredes" image={wallIcon} selected={selected?.name} setObject={setObject} />
-                    <MeetObjectPicker asset={objectsJson.floor} label="Pisos" image={floorIcon} selected={selected?.name} setObject={setObject} />
-                    <MeetObjectPicker asset={objectsJson.rug} label="Tapetes" image={rugIcon} selected={selected?.name} setObject={setObject} />
-                    <MeetObjectPicker asset={objectsJson.table} label="Mesas" image={tableIcon} selected={selected?.name} setObject={setObject} />
-                    <MeetObjectPicker asset={objectsJson.chair} label="Cadeiras" image={chairIcon} selected={selected?.name} setObject={setObject} />
-                    <MeetObjectPicker asset={objectsJson.couch} label="Sofás" image={couchIcon} selected={selected?.name} setObject={setObject} />
-                    <MeetObjectPicker asset={objectsJson.decor} label="Decorações" image={decorIcon} selected={selected?.name} setObject={setObject} />
-                    <MeetObjectPicker asset={objectsJson.nature} label="Plantas" image={natureIcon} selected={selected?.name} setObject={setObject} />
+                    <MeetObjectPicker
+                        asset={objectsJson.wall}
+                        label="Paredes"
+                        image={wallIcon}
+                        selected={selected?.name}
+                        setObject={setObject}
+                    />
+                    <MeetObjectPicker
+                        asset={objectsJson.floor}
+                        label="Pisos"
+                        image={floorIcon}
+                        selected={selected?.name}
+                        setObject={setObject}
+                    />
+                    <MeetObjectPicker
+                        asset={objectsJson.rug}
+                        label="Tapetes"
+                        image={rugIcon}
+                        selected={selected?.name}
+                        setObject={setObject}
+                    />
+                    <MeetObjectPicker
+                        asset={objectsJson.table}
+                        label="Mesas"
+                        image={tableIcon}
+                        selected={selected?.name}
+                        setObject={setObject}
+                    />
+                    <MeetObjectPicker
+                        asset={objectsJson.chair}
+                        label="Cadeiras"
+                        image={chairIcon}
+                        selected={selected?.name}
+                        setObject={setObject}
+                    />
+                    <MeetObjectPicker
+                        asset={objectsJson.couch}
+                        label="Sofás"
+                        image={couchIcon}
+                        selected={selected?.name}
+                        setObject={setObject}
+                    />
+                    <MeetObjectPicker
+                        asset={objectsJson.decor}
+                        label="Decorações"
+                        image={decorIcon}
+                        selected={selected?.name}
+                        setObject={setObject}
+                    />
+                    <MeetObjectPicker
+                        asset={objectsJson.nature}
+                        label="Plantas"
+                        image={natureIcon}
+                        selected={selected?.name}
+                        setObject={setObject}
+                    />
                 </div>
                 <div className="form">
                     <span onClick={goBack}>Voltar</span>
-                    <button onClick={doUpdate}
+                    <button
+                        onClick={doUpdate}
                         disabled={isFormInvalid}
-                        className={isFormInvalid ? 'disabled' : ''}>Salvar</button>
+                        className={isFormInvalid ? "disabled" : ""}
+                    >
+                        Salvar
+                    </button>
                 </div>
             </div>
-            <MeetObjectsroom objects={objects} selected={selected} setSelected={setSelected} removeObject={removeObject} rotateObject={rotateObject} moveSelected={moveSelected} />
+            <MeetObjectsroom
+                objects={objects}
+                selected={selected}
+                setSelected={setSelected}
+                removeObject={removeObject}
+                rotateObject={rotateObject}
+                moveSelected={moveSelected}
+            />
         </div>
     );
-}
+};

@@ -1,10 +1,10 @@
-@import './configs.scss';
+@import "./configs.scss";
 
 @mixin hover-selected-effect {
-      opacity: 1;
-      border-radius: 0;
-      width: 75px;
-      height: 75px;
+    opacity: 1;
+    border-radius: 0;
+    width: 75px;
+    height: 75px;
 }
 
 .container-modal {
@@ -23,7 +23,7 @@
                 font-size: 12px;
                 line-height: 17px;
                 color: $greyColor2;
-                margin: 0;  
+                margin: 0;
             }
 
             span {
@@ -47,11 +47,11 @@
                 &::-webkit-scrollbar {
                     width: 6px;
                 }
-            
+
                 &::-webkit-scrollbar-track {
                     background-color: $primaryColorWithOpacity1;
                 }
-            
+
                 &::-webkit-scrollbar-thumb {
                     background-color: $primaryColor;
                     border-radius: 8px;
@@ -136,11 +136,11 @@
                         opacity: 0.5;
                         border-radius: 50%;
                         transition: all 0.3s ease;
-                        
+
                         &.selected {
                             @include hover-selected-effect;
                         }
-                        
+
                         &:hover {
                             @include hover-selected-effect;
                         }

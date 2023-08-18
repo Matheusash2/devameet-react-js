@@ -1,4 +1,4 @@
-@import './configs.scss';
+@import "./configs.scss";
 
 .container-header {
     display: flex;
@@ -8,7 +8,7 @@
     justify-content: center;
     padding: 12px;
     border-bottom: 1px solid $greyColor1;
-    
+
     .logo {
         width: 45%;
     }
@@ -21,7 +21,7 @@
         justify-content: space-between;
         padding: 26px 0;
         height: 84px;
-        
+
         .logo {
             width: 15%;
             margin-left: 4%;
@@ -32,6 +32,6 @@
             margin-right: 4%;
             align-items: center;
             justify-content: center;
-        }    
+        }
     }
 }
