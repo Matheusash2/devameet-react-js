@@ -9,9 +9,12 @@ import upIcon from "../../assets/images/chevron_up.svg";
 import leftIcon from "../../assets/images/chevron_left.svg";
 import downIcon from "../../assets/images/chevron_down.svg";
 import rightIcon from "../../assets/images/chevron_right.svg";
+import { Modal } from "react-bootstrap";
 
 const roomServices = new RoomServices();
 const wsServices = createPeerConnectionContext();
+
+let userMediaStream: any;
 
 export const RoomHome = () => {
     const navigate = useNavigate();
@@ -21,6 +24,7 @@ export const RoomHome = () => {
     const [objects, setObjects] = useState([]);
     const [connectedUsers, setConnectedUsers] = useState([]);
     const [me, setMe] = useState<any>({});
+    const [showModal, setShowModal] = useState(false);
     const userId = localStorage.getItem("id") || "";
     const mobile = window.innerWidth <= 992;
 
@@ -45,6 +49,19 @@ export const RoomHome = () => {
             });
 
             setObjects(newObjects);
+            userMediaStream = await navigator?.mediaDevices?.getUserMedia({
+                video: {
+                    width: { min: 640, ideal: 1280 },
+                    height: { min: 400, ideal: 1080 },
+                    aspectRatio: { ideal: 1.7777 },
+                },
+                audio: true,
+            });
+
+            if (document.getElementById("localVideoRef")) {
+                const videoRef: any = document.getElementById("localVideoRef");
+                videoRef.srcObject = userMediaStream;
+            }
         } catch (e) {
             console.log("Ocorreu erro ao buscar dados da sala:", e);
         }
@@ -65,10 +82,15 @@ export const RoomHome = () => {
     }, []);
 
     const enterRoom = () => {
+        if (!userMediaStream) {
+            return setShowModal(true);
+        }
+
         if (!link || !userId) {
             return navigate("/");
         }
         wsServices.joinRoom(link, userId);
+        wsServices.onCallMade();
         wsServices.onUpdateUserList(async (users: any) => {
             if (users) {
                 setConnectedUsers(users);
@@ -78,6 +100,24 @@ export const RoomHome = () => {
                 if (me) {
                     setMe(me);
                     localStorage.setItem("me", JSON.stringify(me));
+                }
+
+                const usersWithoutMe = users.filter(
+                    (u: any) => u.user !== userId
+                );
+                for (const user of usersWithoutMe) {
+                    wsServices.addPeerConnection(
+                        user.clientId,
+                        userMediaStream,
+                        (_stream: any) => {
+                            if (document.getElementById(user.clientId)) {
+                                const videoRef: any = document.getElementById(
+                                    user.clientId
+                                );
+                                videoRef.srcObject = _stream;
+                            }
+                        }
+                    );
                 }
             }
         });
@@ -89,7 +129,26 @@ export const RoomHome = () => {
                 (u: any) => u.clientId !== socketId
             );
             setConnectedUsers(filtered);
+            wsServices.removePeerConnection(socketId);
         });
+
+        wsServices.onAddUser((user: any) => {
+            console.log("onAddUser", user);
+            wsServices.addPeerConnection(
+                user,
+                userMediaStream,
+                (_stream: any) => {
+                    if (document.getElementById(user)) {
+                        const videoRef: any = document.getElementById(user);
+                        videoRef.srcObject = _stream;
+                    }
+                }
+            );
+
+            wsServices.callUser(user);
+        });
+
+        wsServices.onAnswerMade((socket: any) => wsServices.callUser(socket));
     };
 
     const toggleMute = () => {
@@ -164,83 +223,137 @@ export const RoomHome = () => {
         navigator.clipboard.writeText(window.location.href);
     };
 
+    const getUsersWithoutMe = () => {
+        return connectedUsers.filter((u: any) => u.user !== userId);
+    };
+
     return (
-        <div className="container-principal">
-            <div className="container-room">
-                {objects.length > 0 ? (
-                    <>
-                        <div className="resume">
-                            <div onClick={copyLink}>
-                                <span>
-                                    <strong>Reunião</strong>
-                                    {link}
-                                </span>
-                                <CopyIcon color={color} />
+        <>
+            <div className="container-principal">
+                <div className="container-room">
+                    {objects.length > 0 ? (
+                        <>
+                            <div className="resume">
+                                <div onClick={copyLink}>
+                                    <span>
+                                        <strong>Reunião</strong>
+                                        {link}
+                                    </span>
+                                    <CopyIcon color={color} />
+                                </div>
+                                <p style={{ color }}>{name}</p>
+                                {/*<video
+                                    id="localVideoRef"
+                                    playsInline
+                                    autoPlay
+                                    muted
+                                />*/}
+                                <audio
+                                    id="localVideoRef"
+                                    playsInline
+                                    autoPlay
+                                    muted
+                                />
+                                {getUsersWithoutMe()?.map((user: any) => (
+                                    <audio
+                                        key={user.clientId}
+                                        id={user.clientId}
+                                        playsInline
+                                        autoPlay
+                                        muted={user?.muted}
+                                    />
+                                ))}
                             </div>
-                            <p style={{ color }}>{name}</p>
+                            <RoomObjects
+                                objects={objects}
+                                enterRoom={enterRoom}
+                                connectedUsers={connectedUsers}
+                                me={me}
+                                toggleMute={toggleMute}
+                            />
+                            {mobile && me?.user && (
+                                <div className="movement">
+                                    <div
+                                        className="button"
+                                        onClick={() =>
+                                            doMovement({ key: "ArrowUp" })
+                                        }
+                                    >
+                                        <img
+                                            src={upIcon}
+                                            alt="Andar para cima"
+                                        />
+                                    </div>
+                                    <div className="line">
+                                        <div
+                                            className="button"
+                                            onClick={() =>
+                                                doMovement({ key: "ArrowLeft" })
+                                            }
+                                        >
+                                            <img
+                                                src={leftIcon}
+                                                alt="Andar para esquerda"
+                                            />
+                                        </div>
+                                        <div
+                                            className="button"
+                                            onClick={() =>
+                                                doMovement({ key: "ArrowDown" })
+                                            }
+                                        >
+                                            <img
+                                                src={downIcon}
+                                                alt="Andar para baixo"
+                                            />
+                                        </div>
+                                        <div
+                                            className="button"
+                                            onClick={() =>
+                                                doMovement({
+                                                    key: "ArrowRight",
+                                                })
+                                            }
+                                        >
+                                            <img
+                                                src={rightIcon}
+                                                alt="Andar para direita"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        </>
+                    ) : (
+                        <div className="empty">
+                            <img src={emptyImage} alt="Reunião não encotrada" />
+                            <p>Reunião não encontrada :/</p>
                         </div>
-                        <RoomObjects
-                            objects={objects}
-                            enterRoom={enterRoom}
-                            connectedUsers={connectedUsers}
-                            me={me}
-                            toggleMute={toggleMute}
-                        />
-                        {mobile && me?.user && (
-                            <div className="movement">
-                                <div
-                                    className="button"
-                                    onClick={() =>
-                                        doMovement({ key: "ArrowUp" })
-                                    }
-                                >
-                                    <img src={upIcon} alt="Andar para cima" />
-                                </div>
-                                <div className="line">
-                                    <div
-                                        className="button"
-                                        onClick={() =>
-                                            doMovement({ key: "ArrowLeft" })
-                                        }
-                                    >
-                                        <img
-                                            src={leftIcon}
-                                            alt="Andar para esquerda"
-                                        />
-                                    </div>
-                                    <div
-                                        className="button"
-                                        onClick={() =>
-                                            doMovement({ key: "ArrowDown" })
-                                        }
-                                    >
-                                        <img
-                                            src={downIcon}
-                                            alt="Andar para baixo"
-                                        />
-                                    </div>
-                                    <div
-                                        className="button"
-                                        onClick={() =>
-                                            doMovement({ key: "ArrowRight" })
-                                        }
-                                    >
-                                        <img
-                                            src={rightIcon}
-                                            alt="Andar para direita"
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                        )}
-                    </>
-                ) : (
-                    <div className="empty">
-                        <img src={emptyImage} alt="Reunião não encotrada" />
-                        <p>Reunião não encontrada :/</p>
-                    </div>
-                )}
+                    )}
+                </div>
             </div>
-        </div>
+            <Modal
+                show={showModal}
+                onHide={() => setShowModal(false)}
+                className="container-modal"
+            >
+                <Modal.Body>
+                    <div className="content">
+                        <div className="container">
+                            <span>Aviso!</span>
+                            <p>
+                                Habilite as permissões de audio e video para
+                                parcticipar da reunião.
+                            </p>
+                        </div>
+                        <div className="actions">
+                            <button onClick={() => setShowModal(false)}>
+                                Ok
+                            </button>
+                        </div>
+                    </div>
+                </Modal.Body>
+            </Modal>
+        </>
     );
 };
