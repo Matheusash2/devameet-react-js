@@ -9,6 +9,7 @@ import { LoginServices } from "../services/LoginServices";
 import { useNavigate } from "react-router-dom";
 import { AuthorizeContext } from "../App";
 import { UserServices } from "../services/UserServices";
+import { Loading } from "../components/general/Loading";
 
 const loginServices = new LoginServices();
 const userServices = new UserServices();
@@ -19,6 +20,7 @@ export const Profile = () => {
     const [name, setName] = useState(localStorage.getItem("name") || "");
     const [image, setImage] = useState(localStorage.getItem("avatar") || "");
     const [mobile, setMobile] = useState(window.innerWidth <= 992);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         const handleResize = () => {
@@ -34,6 +36,7 @@ export const Profile = () => {
 
     const finishUpdate = async () => {
         try {
+            setIsLoading(true);
             if (!name || name.trim().length < 2) {
                 return;
             }
@@ -51,9 +54,10 @@ export const Profile = () => {
             if (image) {
                 localStorage.setItem("avatar", image);
             }
-
+            setIsLoading(false);
             return navigate(-1);
         } catch (e: any) {
+            setIsLoading(false);
             if (e?.response?.data?.message) {
                 console.log(
                     "Ocorreu erro ao atualizar dados do usuario:",
@@ -73,34 +77,41 @@ export const Profile = () => {
     return (
         <>
             {!mobile && <Header />}
-            <div className="container-profile">
-                <ActionHeader actionCallback={finishUpdate} disabled={!name} />
-                <AvatarInput image={image} setImage={setImage} />
-                <div className="input">
-                    <div>
-                        <span>Nome</span>
-                        <input
-                            type="text"
-                            placeholder="Informe seu nome"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                        />
-                        {name && (
-                            <img
-                                src={clearIcon}
-                                alt="Limpar"
-                                onClick={() => setName("")}
+            {isLoading ? (
+                <Loading />
+            ) : (
+                <div className="container-profile">
+                    <ActionHeader
+                        actionCallback={finishUpdate}
+                        disabled={!name}
+                    />
+                    <AvatarInput image={image} setImage={setImage} />
+                    <div className="input">
+                        <div>
+                            <span>Nome</span>
+                            <input
+                                type="text"
+                                placeholder="Informe seu nome"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
                             />
-                        )}
+                            {name && (
+                                <img
+                                    src={clearIcon}
+                                    alt="Limpar"
+                                    onClick={() => setName("")}
+                                />
+                            )}
+                        </div>
+                    </div>
+                    <div className="logout">
+                        <div onClick={logout}>
+                            <img src={logoutIcon} alt="Sair" />
+                            <span>Sair</span>
+                        </div>
                     </div>
                 </div>
-                <div className="logout">
-                    <div onClick={logout}>
-                        <img src={logoutIcon} alt="Sair" />
-                        <span>Sair</span>
-                    </div>
-                </div>
-            </div>
+            )}
             <Footer />
         </>
     );

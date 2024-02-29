@@ -1,6 +1,7 @@
 import editIcon from "../../assets/images/edit.svg";
 import copyIcon from "../../assets/images/copy.svg";
 import trashIcon from "../../assets/images/trash.svg";
+import userBanIcon from "../../assets/images/user_ban.svg";
 import roomMobileIcon from "../../assets/images/room_mobile.svg";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -10,6 +11,8 @@ type MeetListItemProps = {
     selected: string;
     selectMeet(meet: any): void;
     selectToRemove(id: string): void;
+    showBan: string;
+    setShowBan(id: string): void;
 };
 
 export const MeetListItem: React.FC<MeetListItemProps> = ({
@@ -17,6 +20,8 @@ export const MeetListItem: React.FC<MeetListItemProps> = ({
     selectToRemove,
     selectMeet,
     selected,
+    showBan,
+    setShowBan,
 }) => {
     const [mobile, setMobile] = useState(window.innerWidth <= 992);
 
@@ -46,6 +51,14 @@ export const MeetListItem: React.FC<MeetListItemProps> = ({
         navigator.clipboard.writeText(
             window?.location?.href + "room/" + meet?.link
         );
+    };
+
+    const toggleBanList = () => {
+        if (showBan === meet.id) {
+            setShowBan('');
+        } else {
+            setShowBan(meet.id);
+        }
     };
 
     return (
@@ -86,6 +99,11 @@ export const MeetListItem: React.FC<MeetListItemProps> = ({
                     src={trashIcon}
                     alt="deletar reunião"
                     onClick={() => selectToRemove(meet?.id)}
+                />
+                <img
+                    src={userBanIcon}
+                    alt="Exibir bans"
+                    onClick={toggleBanList}
                 />
             </div>
         </div>

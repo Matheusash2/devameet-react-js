@@ -131,13 +131,13 @@
             &.decor-object {
                 width: 12.5%;
                 height: 12.5%;
-                padding: 5%;
+                padding: 2.5%;
             }
 
             &.nature-object {
                 width: 12.5%;
-                height: 25%;
-                padding-top: 5%;
+                height: 12.5%;
+                padding-top: 0;
             }
 
             &.row-one {
@@ -247,6 +247,10 @@
 
                 &.rotatedAvatar {
                     height: 55%;
+                }
+
+                &.selectedAvatar {
+                    border: 2px solid $primaryColor;
                 }
             }
 
@@ -417,7 +421,9 @@
             }
 
             .audio {
-                width: 48px;
+                width: 9%;
+                top: 90%;
+                left: 90%;
             }
         }
     }

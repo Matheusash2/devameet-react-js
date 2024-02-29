@@ -13,6 +13,7 @@ import chairIcon from "../../assets/images/chair.svg";
 import couchIcon from "../../assets/images/couch.svg";
 import decorIcon from "../../assets/images/decor.svg";
 import natureIcon from "../../assets/images/nature.svg";
+import { Loading } from "../general/Loading";
 
 const meetServices = new MeetServices();
 
@@ -23,6 +24,7 @@ export const MeetEdit = () => {
     const [color, setColor] = useState("");
     const [selected, setSelected] = useState<any>({});
     const [objects, setObjects] = useState<any>([]);
+    const [isLoading, setIsLoading] = useState(false);
 
     const navigate = useNavigate();
 
@@ -37,6 +39,7 @@ export const MeetEdit = () => {
     const { meetId } = useParams();
 
     const getMeet = async () => {
+        setIsLoading(true);
         if (!meetId) {
             return navigate("/");
         }
@@ -59,6 +62,7 @@ export const MeetEdit = () => {
 
             setObjects(newObjects);
         }
+        setIsLoading(false);
     };
 
     useEffect(() => {
@@ -142,6 +146,7 @@ export const MeetEdit = () => {
 
     const doUpdate = async () => {
         try {
+            setIsLoading(true);
             if (isFormInvalid) {
                 return;
             }
@@ -153,8 +158,10 @@ export const MeetEdit = () => {
             };
 
             await meetServices.updateMeet(body, id);
+            setIsLoading(false);
             return navigate("/");
         } catch (e: any) {
+            setIsLoading(false);
             if (e?.response?.data?.message) {
                 console.log(
                     "Erro ao editar reunião:",
@@ -177,10 +184,10 @@ export const MeetEdit = () => {
 
             switch (event?.key) {
                 case "ArrowUp":
-                    selected.y = selected.y > 0 ? selected.y - 1 : 0;
+                    selected.y = selected.y > 1 ? selected.y - 1 : 1;
                     break;
                 case "ArrowDown":
-                    selected.y = selected.y < 7 ? selected.y + 1 : 7;
+                    selected.y = selected.y < 6 ? selected.y + 1 : 6;
                     break;
                 case "ArrowLeft":
                     selected.x = selected.x > 0 ? selected.x - 1 : 0;
@@ -200,91 +207,97 @@ export const MeetEdit = () => {
 
     return (
         <div className="container-principal">
-            <div className="container-meet">
-                <MeetAddEditHeader
-                    isEdit={true}
-                    name={name}
-                    setName={setName}
-                    color={color}
-                    setColor={setColor}
-                />
-                <div className="scroll">
-                    <MeetObjectPicker
-                        asset={objectsJson.wall}
-                        label="Paredes"
-                        image={wallIcon}
-                        selected={selected?.name}
-                        setObject={setObject}
+            {isLoading ? (
+                <Loading />
+            ) : (
+                <>
+                    <div className="container-meet">
+                        <MeetAddEditHeader
+                            isEdit={true}
+                            name={name}
+                            setName={setName}
+                            color={color}
+                            setColor={setColor}
+                        />
+                        <div className="scroll">
+                            <MeetObjectPicker
+                                asset={objectsJson.wall}
+                                label="Paredes"
+                                image={wallIcon}
+                                selected={selected?.name}
+                                setObject={setObject}
+                            />
+                            <MeetObjectPicker
+                                asset={objectsJson.floor}
+                                label="Pisos"
+                                image={floorIcon}
+                                selected={selected?.name}
+                                setObject={setObject}
+                            />
+                            <MeetObjectPicker
+                                asset={objectsJson.rug}
+                                label="Tapetes"
+                                image={rugIcon}
+                                selected={selected?.name}
+                                setObject={setObject}
+                            />
+                            <MeetObjectPicker
+                                asset={objectsJson.table}
+                                label="Mesas"
+                                image={tableIcon}
+                                selected={selected?.name}
+                                setObject={setObject}
+                            />
+                            <MeetObjectPicker
+                                asset={objectsJson.chair}
+                                label="Cadeiras"
+                                image={chairIcon}
+                                selected={selected?.name}
+                                setObject={setObject}
+                            />
+                            <MeetObjectPicker
+                                asset={objectsJson.couch}
+                                label="Sofás"
+                                image={couchIcon}
+                                selected={selected?.name}
+                                setObject={setObject}
+                            />
+                            <MeetObjectPicker
+                                asset={objectsJson.decor}
+                                label="Decorações"
+                                image={decorIcon}
+                                selected={selected?.name}
+                                setObject={setObject}
+                            />
+                            <MeetObjectPicker
+                                asset={objectsJson.nature}
+                                label="Plantas"
+                                image={natureIcon}
+                                selected={selected?.name}
+                                setObject={setObject}
+                            />
+                        </div>
+                        <div className="form">
+                            <span onClick={goBack}>Voltar</span>
+                            <button
+                                onClick={doUpdate}
+                                disabled={isFormInvalid}
+                                className={isFormInvalid ? "disabled" : ""}
+                            >
+                                Salvar
+                            </button>
+                        </div>
+                    </div>
+                    <MeetObjectsroom
+                        objects={objects}
+                        selected={selected}
+                        setSelected={setSelected}
+                        removeObject={removeObject}
+                        rotateObject={rotateObject}
+                        moveSelected={moveSelected}
                     />
-                    <MeetObjectPicker
-                        asset={objectsJson.floor}
-                        label="Pisos"
-                        image={floorIcon}
-                        selected={selected?.name}
-                        setObject={setObject}
-                    />
-                    <MeetObjectPicker
-                        asset={objectsJson.rug}
-                        label="Tapetes"
-                        image={rugIcon}
-                        selected={selected?.name}
-                        setObject={setObject}
-                    />
-                    <MeetObjectPicker
-                        asset={objectsJson.table}
-                        label="Mesas"
-                        image={tableIcon}
-                        selected={selected?.name}
-                        setObject={setObject}
-                    />
-                    <MeetObjectPicker
-                        asset={objectsJson.chair}
-                        label="Cadeiras"
-                        image={chairIcon}
-                        selected={selected?.name}
-                        setObject={setObject}
-                    />
-                    <MeetObjectPicker
-                        asset={objectsJson.couch}
-                        label="Sofás"
-                        image={couchIcon}
-                        selected={selected?.name}
-                        setObject={setObject}
-                    />
-                    <MeetObjectPicker
-                        asset={objectsJson.decor}
-                        label="Decorações"
-                        image={decorIcon}
-                        selected={selected?.name}
-                        setObject={setObject}
-                    />
-                    <MeetObjectPicker
-                        asset={objectsJson.nature}
-                        label="Plantas"
-                        image={natureIcon}
-                        selected={selected?.name}
-                        setObject={setObject}
-                    />
-                </div>
-                <div className="form">
-                    <span onClick={goBack}>Voltar</span>
-                    <button
-                        onClick={doUpdate}
-                        disabled={isFormInvalid}
-                        className={isFormInvalid ? "disabled" : ""}
-                    >
-                        Salvar
-                    </button>
-                </div>
-            </div>
-            <MeetObjectsroom
-                objects={objects}
-                selected={selected}
-                setSelected={setSelected}
-                removeObject={removeObject}
-                rotateObject={rotateObject}
-                moveSelected={moveSelected}
-            />
+                </>
+            )}
         </div>
     );
 };

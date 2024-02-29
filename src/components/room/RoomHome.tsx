@@ -10,8 +10,12 @@ import leftIcon from "../../assets/images/chevron_left.svg";
 import downIcon from "../../assets/images/chevron_down.svg";
 import rightIcon from "../../assets/images/chevron_right.svg";
 import { Modal } from "react-bootstrap";
+import { Loading } from "../general/Loading";
+import videoIconOff from "../../assets/images/video_off.svg";
+import { BannedServices } from "../../services/BannedServices";
 
 const roomServices = new RoomServices();
+const bannedServices = new BannedServices();
 const wsServices = createPeerConnectionContext();
 
 let userMediaStream: any;
@@ -25,11 +29,23 @@ export const RoomHome = () => {
     const [connectedUsers, setConnectedUsers] = useState([]);
     const [me, setMe] = useState<any>({});
     const [showModal, setShowModal] = useState(false);
+    const [showModalBanned, setShowModalBanned] = useState(false);
+    const [showModalBannedErro, setShowModalBannedErro] = useState(false);
+    const [objectWalkable, setObjectWalkable] = useState<any>([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [inRoom, setInRoom] = useState(false);
+    const [selectedMeet, setSelectedMeet] = useState<string>("");
+    const [selectedUser, setSelectedUser] = useState<string>("");
+    const [usersBanned, setUsersBanned] = useState([]);
+    const [meet, setMeet] = useState<any>({});
+    const [selectedClientId, setSelectedClientId] = useState<string>("");
+    const [userBan, setUserBan] = useState(false);
     const userId = localStorage.getItem("id") || "";
     const mobile = window.innerWidth <= 992;
 
     const getRoom = async () => {
         try {
+            setIsLoading(true);
             if (!link) {
                 return navigate("/");
             }
@@ -39,8 +55,11 @@ export const RoomHome = () => {
             if (!result || !result.data) {
                 return;
             }
-            const { name, color, objects } = result.data;
+            const { _id, name, color, objects } = result.data;
+            console.log("resultEnter: ", result.data);
 
+            listUsersBanned(_id);
+            setMeet(_id);
             setName(name);
             setColor(color);
 
@@ -58,17 +77,23 @@ export const RoomHome = () => {
                 audio: true,
             });
 
-            if (document.getElementById("localVideoRef")) {
-                const videoRef: any = document.getElementById("localVideoRef");
+            if (document.getElementById("localVideoRefMe")) {
+                const videoRef: any =
+                    document.getElementById("localVideoRefMe");
                 videoRef.srcObject = userMediaStream;
             }
+
+            setIsLoading(false);
         } catch (e) {
+            setIsLoading(false);
             console.log("Ocorreu erro ao buscar dados da sala:", e);
         }
     };
 
     useEffect(() => {
         getRoom();
+        getUsersWithoutMe();
+        listUsersBanned(meet);
     }, []);
 
     useEffect(() => {
@@ -79,7 +104,7 @@ export const RoomHome = () => {
                 doMovement(event)
             );
         };
-    }, []);
+    }, [objectWalkable]);
 
     const enterRoom = () => {
         if (!userMediaStream) {
@@ -119,6 +144,7 @@ export const RoomHome = () => {
                         }
                     );
                 }
+                console.log("usersWithouMe", usersWithoutMe);
             }
         });
 
@@ -144,11 +170,12 @@ export const RoomHome = () => {
                     }
                 }
             );
-
             wsServices.callUser(user);
         });
 
         wsServices.onAnswerMade((socket: any) => wsServices.callUser(socket));
+        objectsWalkableRoom();
+        setInRoom(true);
     };
 
     const toggleMute = () => {
@@ -159,6 +186,31 @@ export const RoomHome = () => {
         };
 
         wsServices.updateUserMute(payload);
+    };
+
+    const objectsWalkableRoom = () => {
+        let objectsPosition: any[] = [];
+
+        objects?.map((object: any) => {
+            if (object.walkable === false) {
+                let y = object.y;
+                let x = object.x;
+                let width = object.width;
+                let height = object.height;
+
+                for (width; width > 0; width--) {
+                    for (height; height > 0; height--) {
+                        objectsPosition.push([x, y - 1]);
+                        y++;
+                    }
+                    y = object.y;
+                    height = object.height;
+                    x++;
+                }
+            }
+        });
+        setObjectWalkable([objectsPosition]);
+        console.log("objects", objectsPosition);
     };
 
     const doMovement = (event: any) => {
@@ -172,49 +224,86 @@ export const RoomHome = () => {
             } as any;
 
             switch (event.key) {
-                case "ArrowUp":
-                    payload.x = user.x;
-                    payload.orientation = "back";
-                    if (user.orientation === "back") {
-                        payload.y = user.y > 0 ? user.y - 1 : 0;
-                    } else {
-                        payload.y = user.y;
-                    }
-                    break;
-                case "ArrowDown":
-                    payload.x = user.x;
-                    payload.orientation = "front";
-                    if (user.orientation === "front") {
-                        payload.y = user.y < 6 ? user.y + 1 : 6;
-                    } else {
-                        payload.y = user.y;
-                    }
-                    break;
-                case "ArrowLeft":
-                    payload.y = user.y;
-                    payload.orientation = "left";
-                    if (user.orientation === "left") {
-                        payload.x = user.x > 0 ? user.x - 1 : 0;
-                    } else {
+                case "ArrowUp": {
+                    if (objectWalkable[0]) {
                         payload.x = user.x;
+                        payload.orientation = "back";
+                        if (user.orientation === "back") {
+                            payload.y = user.y > 1 ? user.y - 1 : 1;
+                        } else {
+                            payload.y = user.y;
+                        }
+                        console.log("objectWalk", objectWalkable);
+                        objectWalkable[0].map((obj: any) => {
+                            if (obj[0] === payload.x && obj[1] === payload.y) {
+                                payload.x = user.x;
+                                payload.y = user.y;
+                            }
+                        });
                     }
                     break;
-                case "ArrowRight":
-                    payload.y = user.y;
-                    payload.orientation = "right";
-                    if (user.orientation === "right") {
-                        payload.x = user.x < 7 ? user.x + 1 : 7;
-                    } else {
+                }
+                case "ArrowDown": {
+                    if (objectWalkable[0]) {
                         payload.x = user.x;
+                        payload.orientation = "front";
+                        if (user.orientation === "front") {
+                            payload.y = user.y < 6 ? user.y + 1 : 6;
+                        } else {
+                            payload.y = user.y;
+                        }
+                        objectWalkable[0].map((obj: any) => {
+                            if (obj[0] === payload.x && obj[1] === payload.y) {
+                                payload.x = user.x;
+                                payload.y = user.y;
+                            }
+                        });
                     }
                     break;
+                }
+                case "ArrowLeft": {
+                    if (objectWalkable[0]) {
+                        payload.y = user.y;
+                        payload.orientation = "left";
+                        if (user.orientation === "left") {
+                            payload.x = user.x > 0 ? user.x - 1 : 0;
+                        } else {
+                            payload.x = user.x;
+                        }
+                        objectWalkable[0].map((obj: any) => {
+                            if (obj[0] === payload.x && obj[1] === payload.y) {
+                                payload.x = user.x;
+                                payload.y = user.y;
+                            }
+                        });
+                    }
+                    break;
+                }
+                case "ArrowRight": {
+                    if (objectWalkable[0]) {
+                        payload.y = user.y;
+                        payload.orientation = "right";
+                        if (user.orientation === "right") {
+                            payload.x = user.x < 7 ? user.x + 1 : 7;
+                        } else {
+                            payload.x = user.x;
+                        }
+                        objectWalkable[0].map((obj: any) => {
+                            if (obj[0] === payload.x && obj[1] === payload.y) {
+                                payload.x = user.x;
+                                payload.y = user.y;
+                            }
+                        });
+                    }
+                    break;
+                }
                 default:
                     break;
             }
 
             if (payload.x >= 0 && payload.y >= 0 && payload.orientation) {
                 wsServices.updateUserMovement(payload);
-                console.debug(payload);
+                console.debug("payload", payload);
             }
         }
     };
@@ -224,113 +313,310 @@ export const RoomHome = () => {
     };
 
     const getUsersWithoutMe = () => {
-        return connectedUsers.filter((u: any) => u.user !== userId);
+        console.log("userId", userId);
+        console.log("connectedUsers", connectedUsers);
+        const usersRoom = connectedUsers.filter((u: any) => u.user !== userId);
+        return usersRoom;
+    };
+
+    const userName = (user: any) => {
+        if (user?.name) {
+            return user.name.split(" ")[0];
+        }
+        return " ";
+    };
+
+    const getMutedVideoClass = (user: any) => {
+        if (user?.muted) {
+            return "mutedVideo";
+        }
+        return "";
+    };
+
+    const getMutedClass = (user: any) => {
+        if (user?.muted) {
+            return "muted";
+        }
+        return "";
+    };
+
+    const bannedUsers = async () => {
+        try {
+            if (selectedUser && selectedMeet) {
+                await bannedServices.createBanned({
+                    userBannedId: selectedUser,
+                    meet: selectedMeet,
+                });
+                const bannedUser = connectedUsers.find(
+                    (user: any) => user.user === selectedUser
+                );              
+                if (bannedUser) {
+                    const { clientId } = bannedUser;
+                    console.log("socketId do usuário banido:", clientId);
+                    const clientIdBanned: string = clientId
+                    console.log("clientIdBan do usuário banido:", clientIdBanned);
+                    setSelectedClientId(clientIdBanned);
+                    console.log("setSelectedClientId teste", setSelectedClientId.toString());
+                }
+            console.log("selectedClientId 2:", selectedClientId)
+
+            }
+            const userId = selectedUser;
+            const meetId = selectedMeet.toString();
+            console.log("meetId do usuário banido:", meetId);
+            console.log("selectedClientId:", selectedClientId)
+            const clientId = selectedClientId.toString();
+            console.log("teste de clientId:", clientId);
+            const payload = {
+                clientId,
+                userId,
+                meetId
+            } as any;
+
+            wsServices.removeUserBan(payload)
+            listUsersBanned(meet);
+            setSelectedUser("");
+            setSelectedMeet("");
+            setShowModalBanned(false);
+        } catch (e: any) {
+            setShowModalBanned(false);
+            setShowModalBannedErro(true);
+            setSelectedUser("");
+            setSelectedMeet("");
+            if (e?.response?.data?.message) {
+                console.log(
+                    "Erro ao banir usuário:",
+                    e?.response?.data?.message
+                );
+            } else {
+                console.log("Erro ao banir usuário:", e);
+            }
+        }
+    };
+
+    const selectToBan = (user: string, meet: string) => {
+        if (user !== userId) {
+            setSelectedUser(user);
+            setSelectedMeet(meet);
+            setShowModalBanned(true);
+        }
+        return "";
+    };
+
+    const cancelBan = () => {
+        setSelectedUser("");
+        setShowModalBanned(false);
+    };
+
+    const listUsersBanned = async (meetId: string) => {
+        const result = await bannedServices.getBannedByMeet(meetId);
+        setUsersBanned(result.data);
+        console.log("List Banned: ", result.data);
     };
 
     return (
         <>
             <div className="container-principal">
-                <div className="container-room">
-                    {objects.length > 0 ? (
-                        <>
-                            <div className="resume">
-                                <div onClick={copyLink}>
-                                    <span>
-                                        <strong>Reunião</strong>
-                                        {link}
-                                    </span>
-                                    <CopyIcon color={color} />
+                {isLoading ? (
+                    <Loading />
+                ) : (
+                    <div className="container-room">
+                        {objects.length > 0 ? (
+                            <>
+                                <div className="container-audio-video-users">
+                                    <div className="other-user">
+                                        {getUsersWithoutMe()?.map(
+                                            (user: any, index) => (
+                                                <div
+                                                    key={index}
+                                                    className="container-media"
+                                                >
+                                                    {mobile ? (
+                                                        <audio
+                                                            key={user.clientId || ""}
+                                                            id={user.clientId}
+                                                            playsInline
+                                                            autoPlay
+                                                            muted={user?.muted}
+                                                        />
+                                                    ) : (
+                                                        <div className="container-video-audio">
+                                                            <div className="row-video-name">
+                                                                {inRoom && (
+                                                                    <div
+                                                                        className={"name-video " + getMutedClass(user)}>
+                                                                        <span>
+                                                                            {userName(user)}
+                                                                        </span>
+                                                                    </div>
+                                                                )}
+                                                                <div
+                                                                    className={
+                                                                        "video " +
+                                                                        getMutedVideoClass(user)}>
+                                                                    {user.muted && (
+                                                                        <img
+                                                                            alt="Video desativado"
+                                                                            src={videoIconOff}
+                                                                            className="video-off"
+                                                                        />
+                                                                    )}
+                                                                    <div
+                                                                        className={"video-audio " + getMutedVideoClass(user)}
+                                                                        key={user.clientId || ""}
+                                                                    >
+                                                                        <video
+                                                                            className="localVideoRefUser"
+                                                                            key={user.clientId || ""}
+                                                                            id={user.clientId}
+                                                                            playsInline
+                                                                            autoPlay
+                                                                            muted={user?.muted}
+                                                                        />
+                                                                        <audio
+                                                                            className="localVideoRefUser"
+                                                                            key={user.clientId || ""}
+                                                                            id={user.clientId}
+                                                                            playsInline
+                                                                            autoPlay
+                                                                            muted={user?.muted}
+                                                                        />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            )
+                                        )}
+                                    </div>
+                                    <div className="resume">
+                                        <div className="copy-link">
+                                            <div onClick={copyLink}>
+                                                <span>
+                                                    <strong>Reunião</strong>
+                                                    {link}
+                                                </span>
+                                                <CopyIcon color={color} />
+                                            </div>
+                                            <p style={{ color }}>{name}</p>
+                                        </div>
+                                        {mobile ? (
+                                            <audio
+                                                id="localVideoRefMe"
+                                                playsInline
+                                                autoPlay
+                                                muted
+                                            />
+                                        ) : (
+                                            <div className="container-video-audio-me">
+                                                <div className="row-video-name-me">
+                                                    {inRoom && (
+                                                        <div
+                                                            className={"name-video-me " + getMutedClass(me)}
+                                                        >
+                                                            <span>
+                                                                {userName(me)}
+                                                            </span>
+                                                        </div>
+                                                    )}
+                                                    <div className="video-me ">
+                                                        {me.muted && (
+                                                            <img
+                                                                alt="Video desativado"
+                                                                src={videoIconOff}
+                                                                className="video-off"
+                                                            />
+                                                        )}
+                                                        <div
+                                                            className={"video-audio-me " + getMutedVideoClass(me)}
+                                                        >
+                                                            <video
+                                                                id="localVideoRefMe"
+                                                                playsInline
+                                                                autoPlay
+                                                                muted
+                                                            />
+                                                            <audio
+                                                                id="localVideoRefMe"
+                                                                playsInline
+                                                                autoPlay
+                                                                muted
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
                                 </div>
-                                <p style={{ color }}>{name}</p>
-                                {/*<video
-                                    id="localVideoRef"
-                                    playsInline
-                                    autoPlay
-                                    muted
-                                />*/}
-                                <audio
-                                    id="localVideoRef"
-                                    playsInline
-                                    autoPlay
-                                    muted
+                                <RoomObjects
+                                    objects={objects}
+                                    enterRoom={enterRoom}
+                                    connectedUsers={connectedUsers}
+                                    me={me}
+                                    toggleMute={toggleMute}
+                                    selectedToBan={selectToBan}
+                                    selectedUser={selectedUser}
+                                    selectedMeet={selectedMeet}
+                                    usersBanned={usersBanned}
+                                    meet={meet}
+                                    user={userId}
                                 />
-                                {getUsersWithoutMe()?.map((user: any) => (
-                                    <audio
-                                        key={user.clientId}
-                                        id={user.clientId}
-                                        playsInline
-                                        autoPlay
-                                        muted={user?.muted}
-                                    />
-                                ))}
+                                {mobile && me?.user && (
+                                    <div className="movement">
+                                        <div
+                                            className="button"
+                                            onClick={() => doMovement({ key: "ArrowUp" })}
+                                        >
+                                            <img
+                                                src={upIcon}
+                                                alt="Andar para cima"
+                                            />
+                                        </div>
+                                        <div className="line">
+                                            <div
+                                                className="button"
+                                                onClick={() => doMovement({ key: "ArrowLeft" })}
+                                            >
+                                                <img
+                                                    src={leftIcon}
+                                                    alt="Andar para esquerda"
+                                                />
+                                            </div>
+                                            <div
+                                                className="button"
+                                                onClick={() => doMovement({ key: "ArrowDown" })}
+                                            >
+                                                <img
+                                                    src={downIcon}
+                                                    alt="Andar para baixo"
+                                                />
+                                            </div>
+                                            <div
+                                                className="button"
+                                                onClick={() => doMovement({ key: "ArrowRight" })}
+                                            >
+                                                <img
+                                                    src={rightIcon}
+                                                    alt="Andar para direita"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                            </>
+                        ) : (
+                            <div className="empty">
+                                <img
+                                    src={emptyImage}
+                                    alt="Reunião não encotrada"
+                                />
+                                <p>Reunião não encontrada :/</p>
                             </div>
-                            <RoomObjects
-                                objects={objects}
-                                enterRoom={enterRoom}
-                                connectedUsers={connectedUsers}
-                                me={me}
-                                toggleMute={toggleMute}
-                            />
-                            {mobile && me?.user && (
-                                <div className="movement">
-                                    <div
-                                        className="button"
-                                        onClick={() =>
-                                            doMovement({ key: "ArrowUp" })
-                                        }
-                                    >
-                                        <img
-                                            src={upIcon}
-                                            alt="Andar para cima"
-                                        />
-                                    </div>
-                                    <div className="line">
-                                        <div
-                                            className="button"
-                                            onClick={() =>
-                                                doMovement({ key: "ArrowLeft" })
-                                            }
-                                        >
-                                            <img
-                                                src={leftIcon}
-                                                alt="Andar para esquerda"
-                                            />
-                                        </div>
-                                        <div
-                                            className="button"
-                                            onClick={() =>
-                                                doMovement({ key: "ArrowDown" })
-                                            }
-                                        >
-                                            <img
-                                                src={downIcon}
-                                                alt="Andar para baixo"
-                                            />
-                                        </div>
-                                        <div
-                                            className="button"
-                                            onClick={() =>
-                                                doMovement({
-                                                    key: "ArrowRight",
-                                                })
-                                            }
-                                        >
-                                            <img
-                                                src={rightIcon}
-                                                alt="Andar para direita"
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
-                        </>
-                    ) : (
-                        <div className="empty">
-                            <img src={emptyImage} alt="Reunião não encotrada" />
-                            <p>Reunião não encontrada :/</p>
-                        </div>
-                    )}
-                </div>
+                        )}
+                    </div>
+                )}
             </div>
             <Modal
                 show={showModal}
@@ -354,6 +640,69 @@ export const RoomHome = () => {
                     </div>
                 </Modal.Body>
             </Modal>
+            <Modal
+                show={showModalBanned}
+                onHide={() => setShowModalBanned(false)}
+                className="container-modal"
+            >
+                <Modal.Body>
+                    <div className="content">
+                        <div className="container">
+                            <span>Banir usuário</span>
+                            <p>Deseja banir o usuário</p>
+                            <p>Essa ação não poderá ser desfeita</p>
+                        </div>
+                        <div className="actions">
+                            <span onClick={cancelBan}>Cancelar</span>
+                            <button onClick={bannedUsers}>Confirmar</button>
+                        </div>
+                    </div>
+                </Modal.Body>
+            </Modal>
+            <Modal
+                show={showModalBannedErro}
+                onHide={() => setShowModalBannedErro(false)}
+                className="container-modal"
+            >
+                <Modal.Body>
+                    <div className="content">
+                        <div className="container">
+                            <span>Erro!</span>
+                            <p>Só o criador da sala pode banir</p>
+                        </div>
+                        <div className="actions">
+                            <button
+                                onClick={() => setShowModalBannedErro(false)}
+                            >
+                                Ok
+                            </button>
+                        </div>
+                    </div>
+                </Modal.Body>
+            </Modal>
+            {userBan && 
+                <Modal
+                show={userBan}
+                onHide={() => setUserBan(false)}
+                className="container-modal"
+            >
+                    <Modal.Body>
+                        <div className="content">
+                            <div className="container">
+                                <span>Aviso!</span>
+                                <p>Um usuário foi banido. Por favor, entre novamente na sala</p>
+                            </div>
+                            <div className="actions">
+                                <button
+                                    onClick={() => window.location.reload()}
+                                >
+                                    Ok
+                                </button>
+                            </div>
+                        </div>
+                    </Modal.Body>
+                </Modal>
+            } 
         </>
     );
 };

@@ -139,6 +139,22 @@ export class PeerConnectionSession {
             callback(data.socket);
         });
     }
+
+    removeUserBan(data: any) {
+        this.socket.emit("ban-user", data);
+        console.log("meetId: ", data.meetId)
+        console.log("clientId: ", data.clientId)
+
+        this.onBanMessage((message: string) => {
+            console.log("Ban message received:", message);
+        });
+    }
+
+    onBanMessage(callback: any) {
+        this.socket.on("ban-message", (data: any) => {
+            callback(data.message);
+        });
+    }
 }
 
 export const createPeerConnectionContext = () => {

@@ -1,0 +1,17 @@
+<svg width="16px" height="16px" viewBox="0 0 24.00 24.00" xmlns="http://www.w3.org/2000/svg" fill="#7C7786" stroke="#7C7786">
+    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.288"></g>
+    <g id="SVGRepo_iconCarrier">
+        <title></title>
+        <g id="Complete">
+            <g id="user-x">
+                <g>
+                    <path d="M17,21V19a4,4,0,0,0-4-4H5a4,4,0,0,0-4,4v2" fill="none" stroke="#7C7786" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                    <circle cx="9" cy="7" fill="none" r="4" stroke="#7C7786" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></circle>
+                    <line fill="none" stroke="#7C7786" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="17.9" x2="22.1" y1="13.1" y2="8.9"></line>
+                    <line fill="none" stroke="#7C7786" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="17.9" x2="22.1" y1="8.9" y2="13.1"></line>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

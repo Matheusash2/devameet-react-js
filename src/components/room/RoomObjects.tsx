@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-
 import linkPreviewIcon from "../../assets/images/link_preview.svg";
 import micOnIcon from "../../assets/images/mic_on.svg";
 import micOffIcon from "../../assets/images/mic_off.svg";
+import { Modal } from "react-bootstrap";
 
 type RoomObjectsProps = {
     objects: Array<any>;
@@ -10,6 +10,12 @@ type RoomObjectsProps = {
     me?: any;
     enterRoom(): void;
     toggleMute?(): void;
+    selectedToBan(user: string, meet: string): void;
+    selectedUser: string;
+    selectedMeet: string;
+    usersBanned: Array<any>;
+    meet: string;
+    user: string;
 };
 
 export const RoomObjects: React.FC<RoomObjectsProps> = ({
@@ -18,8 +24,15 @@ export const RoomObjects: React.FC<RoomObjectsProps> = ({
     objects,
     connectedUsers,
     me,
+    selectedToBan, 
+    selectedUser,
+    selectedMeet,
+    usersBanned,
+    meet,
+    user
 }) => {
     const [objectsWithWidth, setObjectsWithWidth] = useState<Array<any>>([]);
+    const [showModalEnterRoom, setShowModalEnterRoom] = useState(false);
     const mobile = window.innerWidth <= 992;
 
     const getImageFromObject = (object: any, isAvatar: boolean) => {
@@ -188,8 +201,28 @@ export const RoomObjects: React.FC<RoomObjectsProps> = ({
         return "";
     };
 
+    const selectedAvatarClass = (user: string) => {
+        if(selectedUser === user) {
+            return 'selectedAvatar';
+        }
+        return "";
+    }
+
+    const userBannedInRoom = () => {
+        if (usersBanned) {
+            const isUserBanned = usersBanned.some(ban => ban.userBannedId === user);
+            if (isUserBanned && isUserBanned !== undefined) {
+                setShowModalEnterRoom(true);
+            } else {
+                enterRoom();
+            }
+        } else {
+            enterRoom();          
+        }       
+    }
+
     return (
-        <div className="container-objects">
+        <><div className="container-objects">
             <div className="center">
                 <div className="grid">
                     {objects?.map((object: any) => (
@@ -197,15 +230,12 @@ export const RoomObjects: React.FC<RoomObjectsProps> = ({
                             key={object._id}
                             src={getImageFromObject(object, false)}
                             className={getClassFromObject(object)}
-                            style={getObjectStyle(object)}
-                        />
+                            style={getObjectStyle(object)} />
                     ))}
                     {connectedUsers?.map((user: any) => (
                         <div
                             key={user._id}
-                            className={
-                                "user-avatar " + getClassFromObject(user)
-                            }
+                            className={"user-avatar " + getClassFromObject(user)}
                         >
                             <div className={getMutedClass(user)}>
                                 <span className={getMutedClass(user)}>
@@ -213,13 +243,12 @@ export const RoomObjects: React.FC<RoomObjectsProps> = ({
                                 </span>
                             </div>
                             <img
-                                className={
-                                    "user-avatar-room " +
-                                    getClassAvatarRotated(user)
-                                }
+                                className={"user-avatar-room " +
+                                    getClassAvatarRotated(user) +
+                                    selectedAvatarClass(user.user)}
                                 src={getImageFromObject(user, true)}
                                 style={getObjectStyle(user)}
-                            />
+                                onClick={() => selectedToBan(selectedUser = user.user, selectedMeet = user.meet)} />
                         </div>
                     ))}
                     {me?.user && me.muted && (
@@ -227,25 +256,40 @@ export const RoomObjects: React.FC<RoomObjectsProps> = ({
                             src={micOffIcon}
                             onClick={toggleMute}
                             className="audio"
-                            alt="Microfone desligado"
-                        />
+                            alt="Microfone desligado" />
                     )}
                     {me?.user && !me.muted && (
                         <img
                             src={micOnIcon}
                             onClick={toggleMute}
                             className="audio"
-                            alt="Microfone ligado"
-                        />
+                            alt="Microfone ligado" />
                     )}
                     {(!connectedUsers || connectedUsers.length === 0) && (
                         <div className="preview">
                             <img src={linkPreviewIcon} alt="Entrar na sala" />
-                            <button onClick={enterRoom}>Entrar na sala</button>
+                            <button onClick={userBannedInRoom}>Entrar na sala</button>
                         </div>
                     )}
                 </div>
+
             </div>
-        </div>
+        </div><Modal
+            show={showModalEnterRoom}
+            onHide={() => setShowModalEnterRoom(false)}
+            className="container-modal"
+        >
+                <Modal.Body>
+                    <div className="content">
+                        <div className="container">
+                            <span>Usuário banido</span>
+                            <p>O usuário está banido na sala</p>
+                        </div>
+                        <div className="actions">
+                            <button onClick={() => setShowModalEnterRoom(false)}>Ok</button>
+                        </div>
+                    </div>
+                </Modal.Body>
+            </Modal></>
     );
 };

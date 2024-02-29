@@ -1,0 +1,42 @@
+@import "./configs.scss";
+
+.container-banned-list-item {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0px;
+    border-bottom: 1px solid $greyColor1;
+    
+    div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &.meet {
+            cursor: pointer;
+        }
+
+        .color {
+            width: 6px;
+            height: 32px;
+            border-radius: 12px;
+            margin-right: 8px;
+        }
+
+        span {
+            font-size: 12px;
+            font-weight: 700;
+            color: $greyColor3;
+            word-wrap: break-word;
+
+            &.selected {
+                color: $primaryColor3;
+            }
+        }
+    }
+
+    img {
+        cursor: pointer;
+    }
+}

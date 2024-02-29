@@ -6,11 +6,26 @@
         "defaultXPosition": 0,
         "defaultYPosition": 0,
         "defaultZIndex": 0,
+        "defaultWalkable": true,
         "flexStart": true,
         "objects": [
-            "wall_01",
-            "wall_02",
-            "wall_03"  
+            {
+                "name": "wall_01",
+                "defaultWidth": 8,
+                "defaultHeight": 1
+            },
+            {
+
+                "name": "wall_02",
+                "defaultWidth": 8,
+                "defaultHeight": 1
+            },
+            {
+
+                "name": "wall_03",
+                "defaultWidth": 8,
+                "defaultHeight": 1
+            }
         ]
     },
 
@@ -21,14 +36,39 @@
         "defaultXPosition": 0,
         "defaultYPosition": 1,
         "defaultZIndex": 0,
+        "defaultWalkable": true,
         "flexStart": true,
         "objects": [
-            "floor_01",
-            "floor_02",
-            "floor_03",
-            "floor_04",
-            "floor_05",
-            "floor_06"
+            {
+                "name": "floor_01",
+                "defaultWidth": 8,
+                "defaultHeight": 7
+            },
+            {
+                "name": "floor_02",
+                "defaultWidth": 8,
+                "defaultHeight": 7
+            },
+            {
+                "name": "floor_03",
+                "defaultWidth": 8,
+                "defaultHeight": 7
+            },
+            {
+                "name": "floor_04",
+                "defaultWidth": 8,
+                "defaultHeight": 7
+            },
+            {
+                "name": "floor_05",
+                "defaultWidth": 8,
+                "defaultHeight": 7
+            },
+            {
+                "name": "floor_06",
+                "defaultWidth": 8,
+                "defaultHeight": 7
+            }
         ]
     },
 
@@ -39,10 +79,23 @@
         "defaultXPosition": 2,
         "defaultYPosition": 3,
         "defaultZIndex": 1,
+        "defaultWalkable": true,
         "objects": [
-            "rug_01",
-            "rug_02",
-            "rug_03"
+            {
+                "name":"rug_01",
+                "defaultWidth": 2,
+                "defaultHeight": 3
+            },
+            {
+                "name":"rug_02",
+                "defaultWidth": 2,
+                "defaultHeight": 3
+            },
+            {
+                "name":"rug_03",
+                "defaultWidth": 2,
+                "defaultHeight": 3
+            }
         ]
     },
 
@@ -53,13 +106,38 @@
         "defaultXPosition": 2,
         "defaultYPosition": 3,
         "defaultZIndex": 2,
+        "defaultWalkable": false,
         "objects": [
-            "table_01",
-            "table_02",
-            "table_03",
-            "table_04",
-            "table_05",
-            "table_06"
+            {
+                "name": "table_01",
+                "defaultWidth": 2,
+                "defaultHeight": 2
+            },
+            {
+                "name": "table_02",
+                "defaultWidth": 2,
+                "defaultHeight": 2
+            },
+            {
+                "name": "table_03",
+                "defaultWidth": 2,
+                "defaultHeight": 2
+            },
+            {
+                "name": "table_04",
+                "defaultWidth": 2,
+                "defaultHeight": 2
+            },
+            {
+                "name": "table_05",
+                "defaultWidth": 2,
+                "defaultHeight": 2
+            },
+            {
+                "name": "table_06",
+                "defaultWidth": 2,
+                "defaultHeight": 2
+            }
         ]
     },
 
@@ -70,13 +148,38 @@
         "defaultXPosition": 2,
         "defaultYPosition": 3,
         "defaultZIndex": 2,
+        "defaultWalkable": true,
         "objects": [
-            "chair_01_blue",
-            "chair_01_red",
-            "chair_01_white",
-            "chair_01_yellow",
-            "chair_02",
-            "chair_03"
+            {
+                "name": "chair_01_blue",
+                "defaultWidth": 1,
+                "defaultHeight": 1
+            },
+            {
+                "name": "chair_01_red",
+                "defaultWidth": 1,
+                "defaultHeight": 1
+            },
+            {
+                "name": "chair_01_white",
+                "defaultWidth": 1,
+                "defaultHeight": 1
+            },
+            {
+                "name": "chair_01_yellow",
+                "defaultWidth": 1,
+                "defaultHeight": 1
+            },
+            {
+                "name": "chair_02",
+                "defaultWidth": 1,
+                "defaultHeight": 1
+            },
+            {
+                "name": "chair_03",
+                "defaultWidth": 1,
+                "defaultHeight": 1
+            }
         ]
     },
 
@@ -87,10 +190,23 @@
         "defaultXPosition": 2,
         "defaultYPosition": 3,
         "defaultZIndex": 2,
+        "defaultWalkable": true,
         "objects": [
-            "couch_01",
-            "couch_02",
-            "couch_03"
+            {
+                "name": "couch_01",
+                "defaultWidth": 2,
+                "defaultHeight": 1
+            },
+            {
+                "name": "couch_02",
+                "defaultWidth": 2,
+                "defaultHeight": 1
+            },
+            {
+                "name": "couch_03",
+                "defaultWidth": 2,
+                "defaultHeight": 1
+            }
         ]
     },
 
@@ -101,15 +217,48 @@
         "defaultXPosition": 2,
         "defaultYPosition": 3,
         "defaultZIndex": 3,
+        "defaultWalkable": false,
         "objects": [
-            "decor_01",
-            "decor_02",
-            "decor_03",
-            "decor_04",
-            "decor_05",
-            "decor_06",
-            "decor_07",
-            "decor_08"
+            {
+                "name": "decor_01",
+                "defaultWidth": 1,
+                "defaultHeight": 1
+            },
+            {
+                "name": "decor_02",
+                "defaultWidth": 1,
+                "defaultHeight": 1
+            },
+            {
+                "name": "decor_03",
+                "defaultWidth": 1,
+                "defaultHeight": 1
+            },
+            {
+                "name": "decor_04",
+                "defaultWidth": 1,
+                "defaultHeight": 1
+            },
+            {
+                "name": "decor_05",
+                "defaultWidth": 1,
+                "defaultHeight": 1
+            },
+            {
+                "name": "decor_06",
+                "defaultWidth": 1,
+                "defaultHeight": 1
+            },
+            {
+                "name": "decor_07",
+                "defaultWidth": 1,
+                "defaultHeight": 1
+            },
+            {
+                "name": "decor_08",
+                "defaultWidth": 1,
+                "defaultHeight": 1
+            }
         ]
     },
 
@@ -120,16 +269,53 @@
         "defaultXPosition": 2,
         "defaultYPosition": 3,
         "defaultZIndex": 3,
+        "defaultWalkable": false,
         "objects": [
-            "nature_01",
-            "nature_02",
-            "nature_03",
-            "nature_04",
-            "nature_05",
-            "nature_06",
-            "nature_07",
-            "nature_08",
-            "nature_09"
+            {
+                "name": "nature_01",
+                "defaultWidth": 1,
+                "defaultHeight": 1
+            },
+            {
+                "name": "nature_02",
+                "defaultWidth": 1,
+                "defaultHeight": 1
+            },
+            {
+                "name": "nature_03",
+                "defaultWidth": 1,
+                "defaultHeight": 1
+            },
+            {
+                "name": "nature_04",
+                "defaultWidth": 1,
+                "defaultHeight": 1
+            },
+            {
+                "name": "nature_05",
+                "defaultWidth": 1,
+                "defaultHeight": 1
+            },
+            {
+                "name": "nature_06",
+                "defaultWidth": 1,
+                "defaultHeight": 1
+            },
+            {
+                "name": "nature_07",
+                "defaultWidth": 1,
+                "defaultHeight": 1
+            },
+            {
+                "name": "nature_08",
+                "defaultWidth": 1,
+                "defaultHeight": 1
+            },
+            {
+                "name": "nature_09",
+                "defaultWidth": 1,
+                "defaultHeight": 1
+            }
         ]
     }
 }

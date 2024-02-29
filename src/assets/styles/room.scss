@@ -11,29 +11,238 @@
     background-image: url("../images/background.svg");
     background-size: cover;
 
-    .resume {
-        margin: 16px;
+    .container-audio-video-users {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        max-width: 38%;
 
-        span {
-            font-size: 12px;
-            font-weight: 400;
-            color: $greyColor3;
+        .other-user {
+            display: flex;
+            margin-left: 16px;
+            padding: 16px 0;
+            flex: 1;
 
-            strong {
-                font-weight: 600;
-                margin-right: 4px;
+            .container-media {
+                display: flex;
+                flex: 1;
+
+                .container-video-audio {
+                    display: flex;
+                    flex-wrap: wrap;
+                    max-width: 100%;
+                    justify-content: flex-start;
+                    position: relative;
+                    top: -25%;
+    
+                    .row-video-name {
+                        flex-direction: column;
+                        display: flex;
+                        padding: 9px;
+                        justify-content: space-around;
+                        box-shadow: 1px 0px 5px 0px $greyColor1;
+                        background-color: $white;
+                        border-radius: 10px;
+    
+                        .name-video {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            background-color: $white;
+                            border-radius: 8px;
+                            box-shadow: 1px 0px 5px 0px $greyColor1;
+                            border: 1.5px $primaryColor solid;
+                            width: 100px;
+                            margin-left: 3px;
+    
+                            span {
+                                font-family: $fontRegular;
+                                font-size: 10px;
+                                color: $primaryColor;
+                            }
+                        }
+                        .muted {
+                            border-color: $muted;
+    
+                            span {
+                                color: $muted;
+                            }
+                        }
+                        .video {
+                            flex-direction: column;
+                            display: flex;
+                            flex: 1;
+    
+                            .video-off {
+                                margin: 3px;
+                                box-sizing: border-box;
+                                width: 100px;
+                                height: 75px;
+                                background-color: rgb($greyColor1, 0.5);
+                                padding: 20px;
+                                border-color: $muted;
+                                z-index: 10;
+                                border-radius: 2px;
+                                border: 1.5px solid $muted;
+                            }
+    
+                            .video-audio {
+                                display: flex;
+    
+                                &.mutedVideo {
+                                    border-radius: 2px;
+                                    visibility: hidden;
+                                    position: absolute;
+                                }
+    
+                                .localVideoRefUser {
+                                    margin: 3px;
+                                    box-sizing: border-box;
+                                    width: 100px;
+                                    height: 75px;
+                                    box-shadow: 1px 0px 5px 0px $greyColor1;
+                                    border-width: 1px;
+                                    border-color: $greyColor1;
+                                    border-radius: 2px;
+                                }
+    
+                                #localVideoRefMe {
+                                    margin: 3px;
+                                    box-sizing: border-box;
+                                    width: 100px;
+                                    height: 75px;
+                                    box-shadow: 1px 0px 5px 0px $greyColor1;
+                                    border-width: 1px;
+                                    border-color: $greyColor1;
+                                    border-radius: 2px;
+                                }
+                            }
+                        }
+                    }
+                }
+
             }
         }
 
-        svg {
-            cursor: pointer;
-            margin-left: 4px;
-        }
+        .resume {
+            .copy-link {
+                margin: 16px;
 
-        p {
-            font-size: 16px;
-            font-weight: 700;
-            margin: 0;
+                span {
+                    font-size: 12px;
+                    font-weight: 400;
+                    color: $greyColor3;
+
+                    strong {
+                        font-weight: 600;
+                        margin-right: 4px;
+                    }
+                }
+
+                svg {
+                    cursor: pointer;
+                    margin-left: 4px;
+                }
+
+                p {
+                    font-size: 16px;
+                    font-weight: 700;
+                    margin: 0;
+                }
+            }
+
+            .container-video-audio-me {
+                background-color: $white;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                box-shadow: 1px 0px 5px 0px $greyColor1;
+                padding: 5px;
+                border-radius: 10px;
+
+                .row-video-name-me {
+                    flex-direction: column;
+                    display: flex;
+                    padding: 4px;
+                    width: 100%;
+                    justify-content: center;
+                    align-items: center;
+
+                    .name-video-me {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        background-color: $white;
+                        border-radius: 8px;
+                        box-shadow: 1px 0px 5px 0px $greyColor1;
+                        border: 1.5px $primaryColor solid;
+                        width: 100px;
+
+                        span {
+                            font-family: $fontRegular;
+                            font-size: 10px;
+                            color: $primaryColor;
+                        }
+                    }
+                    .muted {
+                        border-color: $muted;
+
+                        span {
+                            color: $muted;
+                        }
+                    }
+
+                    .video-me {
+                        flex-direction: column;
+                        display: flex;
+                        flex: 1;
+
+                        #localVideoRefMe {
+                            margin: 3px;
+                            box-sizing: border-box;
+                            width: 100px;
+                            height: 75px;
+                            box-shadow: 1px 0px 5px 0px $greyColor1;
+                            border-width: 1px;
+                            border-color: $greyColor1;
+                            border-radius: 2px;
+                        }
+
+                        .video-off {
+                            margin: 3px;
+                            box-sizing: border-box;
+                            width: 100px;
+                            height: 75px;
+                            background-color: rgb($greyColor1, 0.5);
+                            padding: 20px;
+                            border-color: $muted;
+                            z-index: 10;
+                            border-radius: 2px;
+                            border: 1.5px solid $muted;
+                        }
+
+                        .video-audio-me {
+                            display: flex;
+
+                            &.mutedVideo {
+                                border-radius: 2px;
+                                visibility: hidden;
+                                position: absolute;
+                            }
+                            #localVideoRefMe {
+                                margin: 3px;
+                                box-sizing: border-box;
+                                width: 100px;
+                                height: 75px;
+                                box-shadow: 1px 0px 5px 0px $greyColor1;
+                                border-width: 1px;
+                                border-color: $greyColor1;
+                                border-radius: 2px;
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -95,12 +304,12 @@
 
         .resume {
             display: flex;
-            flex-direction: column;
-            height: 100%;
-            align-items: flex-start;
-            justify-content: flex-end;
+            flex-direction: row;
+            align-items: center;
             margin-left: 16px;
             padding: 32px 0;
+            position: absolute;
+            bottom: 5%;
 
             p {
                 margin: 0;

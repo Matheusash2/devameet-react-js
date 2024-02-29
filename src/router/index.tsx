@@ -7,6 +7,7 @@ import { MeetAddView } from "../views/MeetAddView";
 import { MeetEditView } from "../views/MeetEditView";
 import { LinkView } from "../views/Link";
 import { RoomView } from "../views/Room";
+import { Banned } from "../views/Banned";
 
 export const getRouter = (token: string) => {
     if (!token) {
@@ -38,6 +39,11 @@ export const getRouter = (token: string) => {
                 path: "/room/:link",
                 id: "room",
                 element: <RoomView />,
+            },
+            {
+                path: "/banned",
+                id: "banned",
+                element: <Banned />,
             },
         ];
 

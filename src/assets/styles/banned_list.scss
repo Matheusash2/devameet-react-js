@@ -1,0 +1,22 @@
+@import "./configs.scss";
+
+.container-banned-list {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 16px;
+
+        .banned-empty-name {
+            font-size: 12px;
+            display: flex;
+            font-weight: 600;
+            letter-spacing: 0.14px;
+            color: $greyColor2;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid $greyColor1;
+            padding: 10px 0px;
+            margin-bottom: 0;
+        }
+}
